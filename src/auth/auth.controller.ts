@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Patch, Post, Query, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, SignupDto } from './dto/auth.dto';
 import { request } from 'http';
@@ -38,6 +38,14 @@ async updateNumber(@Body()data:any, @User()token:any){
   console.log(user)
   return this.authService.updateNumber(data,user)
 
+}
+
+@Get('/all-users')
+async getAllUsers(@Query('page', new DefaultValuePipe(0), ParseIntPipe)
+page: number,
+@Query('per_page', new DefaultValuePipe(5), ParseIntPipe)
+perPage,){
+  return this.authService.getAllUsers(page, perPage)
 }
 
 }

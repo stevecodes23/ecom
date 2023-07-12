@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/services/prisma.services';
 import { JsonWebTokenService } from 'src/services/jwt.service';
 import { request } from 'http';
+import { Utility } from 'src/utils/utility';
 
 @Injectable()
 export class AuthService {
@@ -85,6 +86,14 @@ async login(body:LoginDto): Promise<any> {
        const newtoken = await this.jwtService.createJwtToken(user)
        return {"updated_token":newtoken,"user":user}
     }
-
+   async getAllUsers(page,perPage):Promise<any>{
+    const totalCount= await this.prisma.users.count()
+    const list=await this.prisma.users.findMany({
+        skip:page*perPage,
+        take:perPage,
+    })
+    console.log(list)
+    return Utility.getPaginatedFormatData(list,totalCount,page,perPage)
+   }
 }
 
