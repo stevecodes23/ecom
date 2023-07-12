@@ -3,6 +3,3 @@ enum STATUS{
     ACCOUNT_BLOCKED="ACCOUNT_BLOCKED",
     NOT_ALLOWED="NOT_ALLOWED"
 }
-enum A{
-    ac="ac"
-}
