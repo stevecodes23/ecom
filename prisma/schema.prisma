@@ -252,7 +252,7 @@ model user_notifications {
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model users {
   id                 Int                  @id @default(autoincrement())
-  email_id           String
+  email_id           String               @unique()
   phone_number       String
   name               String
   password           String

@@ -48,29 +48,42 @@ async login(body:LoginDto): Promise<any> {
          }
     
         }
-       async updatePassword(data,request:any):Promise<any>{
+       async updatePassword(data:any,dectok:any):Promise<any>{
 //         const reqBody = context.switchToHttp().getRequest();
 //         const token= reqBody.headers.authorization.split(" ")[1];
 //         const dectok = await this.jwtService.verifyJwtToken(token)
-         const dectok = request
+        //  console.log(request)
          console.log(JSON.stringify(dectok))
             if(data.newPass==data.confirmPass){
             const password = await bcrypt.hashSync(data.newPass,10)
-            const user = this.prisma.users.update({
+            const user = await this.prisma.users.update({
                 where:{
-                    id:dectok.id
+                    email_id:dectok.email_id
                 },
                 data:{
                     password:password
                 }
             })
-            const newtoken = await this.jwtService.createJwtToken(user)
-            return newtoken
+           const newtoken = await this.jwtService.createJwtToken(user)
+           return {"updated_token":newtoken,"user":user}
+        //  console.log(newtoken)   
+        // return user
         }
         else{
             return"error"
-        }
-        
+        }      
+    }
+    async updateNumber(data,request:any):Promise<any>{
+        const user = await this.prisma.users.update({
+            where:{
+                email_id:request.email_id
+            },
+            data:{
+                phone_number:data.phone_number
+            }
+        })
+       const newtoken = await this.jwtService.createJwtToken(user)
+       return {"updated_token":newtoken,"user":user}
     }
 
 }

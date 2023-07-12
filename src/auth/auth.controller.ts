@@ -32,4 +32,12 @@ async updatePassword(@Body()data:any, @User()token:any){
 
 }
 
+@Patch("/update-number")
+async updateNumber(@Body()data:any, @User()token:any){
+  const user = await this.jwtService.verifyJwtToken(token)
+  console.log(user)
+  return this.authService.updateNumber(data,user)
+
+}
+
 }
