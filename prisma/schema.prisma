@@ -1,0 +1,316 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model address {
+  id              Int      @id @default(autoincrement())
+  user_id         Int
+  address         String
+  city            String
+  state           String
+  pincode         Int
+  landmark        String
+  reciever_number Int
+  reciever_name   String
+  created_at      DateTime @default(now())
+  updated_at      DateTime
+  type            TYPE
+  users           users    @relation(fields: [user_id], references: [id])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model attribute_group {
+  id                       Int                        @id @default(autoincrement())
+  name                     String
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime
+  attributes               attributes[]
+  category_attribute_group category_attribute_group[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model attributes {
+  id                 Int             @id @default(autoincrement())
+  name               String
+  attribute_group_id Int
+  created_at         DateTime        @default(now())
+  updated_at         DateTime
+  attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model banners {
+  id         Int      @id @default(autoincrement())
+  image_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  status     STATUS
+  type       type[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cart {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  quantity   Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model category {
+  id                           Int                @id @default(autoincrement())
+  name                         String
+  parent_id                    Int
+  image_id                     Int
+  created_at                   DateTime           @default(now())
+  updated_at                   DateTime
+  files                        files              @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  category_product             category_product[]
+  type                         type[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model category_attribute_group {
+  id                 Int             @id @default(autoincrement())
+  category_id        Int
+  attribute_group_id Int
+  created_at         DateTime        @default(now())
+  updated_at         DateTime
+  attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attribute_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model category_product {
+  id          Int      @id @default(autoincrement())
+  product_id  Int
+  category_id Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime
+  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
+  product     product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model files {
+  id             Int              @id @default(autoincrement())
+  url            String
+  name           String
+  key            String
+  created_at     DateTime         @default(now())
+  updated_at     String
+  category       category[]
+  product_images product_images[]
+  profile        profile[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model manufacturer {
+  id           Int       @id @default(autoincrement())
+  company_name String
+  display_name String
+  address      Int
+  email_id     String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime
+  product      product[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model order_items {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  order_id   Int
+  quantity   Int
+  price      Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  orders     orders   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model order_status_logs {
+  id         Int      @id @default(autoincrement())
+  order_id   Int
+  status     ORDER_STATUS_LOGS
+  created_at DateTime @default(now())
+  updated_at Int
+  orders     orders   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model orders {
+  id                Int                 @id @default(autoincrement())
+  status            String
+  payment           PAYMENT
+  payment_method    PAYMENT_METHOD
+  created_at        DateTime            @default(now())
+  updated_at        DateTime
+  order_items       order_items[]
+  order_status_logs order_status_logs[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model product {
+  id                        Int                  @id @default(autoincrement())
+  name                      String
+  description               String
+  origin                    String
+  discount_percentage       Int
+  discunted_price           Int
+  thumbnail_image_id        Int
+  manufacturer_id           Int
+  price                     Int
+  minimum_quantity_to_order Int
+  maximum_quantity_to_order Int
+  quantity_to_order         Int
+  vriant_type               Int
+  master_varient_id         Int
+  created_at                DateTime             @default(now())
+  updated_at                DateTime
+  cart                      cart[]
+  category_product          category_product[]
+  order_items               order_items[]
+  manufacturer              manufacturer         @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
+  product_images            product_images[]
+  ratings_an_reviews        ratings_an_reviews[]
+  type                      type[]
+  wishlist                  wishlist[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model product_images {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  image_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model profile {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  alternate_number Int
+  image_id         Int
+  gender           String
+  created_at       DateTime @default(now())
+  updated_at       DateTime
+  files            files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  users            users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ratings_an_reviews {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  review     String
+  rating     Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model type {
+  id                               Int       @id @default(autoincrement())
+  banner_id                        Int
+  product_id                       Int
+  url                              String    
+  created_at                       DateTime  @default(now())
+  updated_at                       DateTime
+  category_id                        Int
+  banners                          banners   @relation(fields: [banner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "banner_id")
+  category_type_categoryTocategory category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category")
+  product                          product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model user_notifications {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  title      String
+  message    String
+  Is_read    Boolean
+  created_at DateTime @default(now())
+  upated_at  DateTime
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model users {
+  id                 Int                  @id @default(autoincrement())
+  email_id           String
+  phone_number       String
+  name               String
+  password           String
+  status             USERS_STATUS         @default(ACTIVE)
+  last_logged_in_at  DateTime?
+  created_at         DateTime?            @default(now())
+  updated_at         DateTime?
+  otp                Int?
+  address            address[]
+  cart               cart[]
+  profile            profile[]
+  user_notifications user_notifications[]
+  wishlist           wishlist[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model wishlist {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+}
+
+enum TYPE {
+  HOME
+  WORK
+}
+
+enum STATUS {
+  ACTIVE
+  INACTIVE
+}
+
+enum PAYMENT {
+  SUCCESSFULL
+  FAILED
+  PENDING
+}
+
+enum PAYMENT_METHOD {
+  COD
+  DEBIT_CARD
+  CREDIT_CARD
+  UPI
+  NET_BANKING
+  WALLET
+}
+
+enum ORDER_STATUS_LOGS {
+  IN_PROCESS
+  OUT_FOR_DELIVERY
+  DELIVERED
+}
+
+enum USERS_STATUS {
+  ACTIVE
+  BLOCKED
+}

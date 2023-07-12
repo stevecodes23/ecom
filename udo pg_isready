@@ -1,0 +1,9 @@
+[0;1;32m●[0m postgresql.service - PostgreSQL RDBMS
+   Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (exited)[0m since Tue 2023-07-11 11:20:30 IST; 2h 22min ago
+ Main PID: 2009 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 4915)
+   CGroup: /system.slice/postgresql.service
+
+Jul 11 11:20:30 akash-HP-EliteBook-840-G1 systemd[1]: Starting PostgreSQL RDBMS...
+Jul 11 11:20:30 akash-HP-EliteBook-840-G1 systemd[1]: Started PostgreSQL RDBMS.
