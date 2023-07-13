@@ -152,18 +152,18 @@ model product {
   name                      String
   description               String
   origin                    String
-  discount_percentage       Int
-  discunted_price           Int
+  discount_percentage       Int?
+  discounted_price          Int?
   thumbnail_image_id        Int
   manufacturer_id           Int
   price                     Int
   minimum_quantity_to_order Int
   maximum_quantity_to_order Int
   quantity_to_order         Int
-  vriant_type               Int
-  master_varient_id         Int
+  vriant_type               Int                  
+  master_varient_id         Int?                 
   created_at                DateTime             @default(now())
-  updated_at                DateTime
+  updated_at                DateTime?
   cart                      cart[]
   category_product          category_product[]
   order_items               order_items[]
@@ -172,6 +172,18 @@ model product {
   ratings_an_reviews        ratings_an_reviews[]
   type                      type[]
   wishlist                  wishlist[]
+  product_inventory         product_inventory[]
+}
+
+model product_inventory{
+  id Int @id @default(autoincrement())
+  product_id Int      @unique
+  qty        Int
+  created_at DateTime @default(now())
+  updated_at DateTime?
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+
+
 }
 
 model product_images {

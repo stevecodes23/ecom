@@ -17,7 +17,7 @@ export class AuthService {
 async signup(body:SignupDto):Promise<any> {
     
     const password = await bcrypt.hashSync(body.password,10)
-    const createdUser = this.prisma.users.create({
+    const createdUser = await this.prisma.users.create({
     data:{
     name:body.name,
     email_id:body.email_id,
