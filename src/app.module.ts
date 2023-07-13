@@ -6,9 +6,10 @@ import { LoggerMiddleware } from 'middleware/logger.middleware';
 import { JsonWebTokenService } from './services/jwt.service';
 import { PrismaService } from './services/prisma.services';
 import { JwtModule } from '@nestjs/jwt';
+import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [AuthModule,JwtModule],
+  imports: [AuthModule,JwtModule, ProductModule],
   controllers: [AppController],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })

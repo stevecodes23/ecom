@@ -64,3 +64,30 @@ export class LoginDto{
     password:string;
 
 }
+
+export class updateNumber{
+  @ApiProperty({
+    type:String,
+    description: 'number is a required property',
+  })
+  @IsPhoneNumber()
+  phone_number:string
+
+}
+
+export class updatePassword{
+  @ApiProperty({
+    type:String,
+    description: 'it is a required property',
+  })
+  @IsPhoneNumber()
+  newPass:string
+
+  @ApiProperty({
+    type:String,
+    description: 'it is a required property',
+  })
+  @IsPhoneNumber()
+  confimPass:string
+
+}
