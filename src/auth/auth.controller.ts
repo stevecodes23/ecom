@@ -5,7 +5,7 @@ import { request } from 'http';
 import { JsonWebTokenService } from 'src/services/jwt.service';
 import { User } from 'src/utils/decorator/auth.decorator';
 import {API_CONSTANTS} from "src/utils/constants/perPage"
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('/auth')
 export class AuthController {
     constructor(
@@ -13,11 +13,14 @@ export class AuthController {
         private readonly jwtService: JsonWebTokenService
       ){}
 
+@ApiOperation({ summary: 'signupData' })
 @ApiTags('ecom')
 @Post("/signup")
  signup(@Body() data:SignupDto){
     return this.authService.signup(data)
   }
+@ApiOperation({ summary: 'loginData' })
+@ApiBearerAuth('JWT-auth')
 @ApiTags('ecom')
 @Get('/login')
 async Login(@Body()data:LoginDto,@User()token:any){
@@ -25,6 +28,8 @@ async Login(@Body()data:LoginDto,@User()token:any){
     const user = await this.jwtService.verifyJwtToken(token)
     return this.authService.login(data)
 }
+@ApiOperation({ summary: 'update password' })
+@ApiBearerAuth('JWT-auth')
 @ApiTags('ecom')
 @Patch("/update-password")
 async updatePassword(@Body()data:any, @User()token:any){
@@ -33,6 +38,8 @@ async updatePassword(@Body()data:any, @User()token:any){
   return this.authService.updatePassword(data,user)
 
 }
+@ApiOperation({ summary: 'update number' })
+@ApiBearerAuth('JWT-auth')
 @ApiTags('ecom')
 @Patch("/update-number")
 async updateNumber(@Body()data:any, @User()token:any){
@@ -41,6 +48,7 @@ async updateNumber(@Body()data:any, @User()token:any){
   return this.authService.updateNumber(data,user)
 
 }
+@ApiOperation({ summary: 'get all users' })
 @ApiTags('ecom')
 @Get('/all-users')
 async getAllUsers(@Query('page', new DefaultValuePipe(0), ParseIntPipe)
