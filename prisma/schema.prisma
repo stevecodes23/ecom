@@ -224,7 +224,7 @@ model user_notifications {
   user_id    Int
   title      String
   message    String
-  Is_read    Boolean
+  Is_read    Boolean  @default(false)
   created_at DateTime @default(now())
   upated_at  DateTime
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
