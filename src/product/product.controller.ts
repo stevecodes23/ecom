@@ -5,7 +5,7 @@ import { addProductDto, addProductQtyDto, updateDiscount } from './dto/product.d
 import { API_CONSTANTS } from 'src/utils/constants/perPage';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
     constructor(
         private readonly productService:ProductService,
@@ -33,7 +33,7 @@ async addProduct(@Body()data :addProductDto){
 @ApiResponse({ status: 201, description: 'The record has been successfully deleted.'})
 @ApiOperation({ summary: 'delete product by id ' })
 @ApiTags('product')
-@Delete('/id/delete-product')
+@Delete('/:id')
 async deleteProduct(@Param('id')id:Number){
    return this.productService.deleteProduct(id)
 }
@@ -49,14 +49,14 @@ async updateDiscount(@Body()data:updateDiscount,@Param('id')id:Number){
 @ApiResponse({ status: 201, description: ' product quantity added'})
 @ApiOperation({ summary: 'product quanity added ' })
 @ApiTags('product')
-@Post('/:id/product-qty')
+@Post('/:id/products-qty')
 async addProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
     return this.productService.addProductQty(data,id)
 }
 @ApiResponse({ status: 201, description: ' product quantity updated'})
 @ApiOperation({ summary: 'product quanity updated' })
 @ApiTags('product')
-@Patch('/:id/product-qty')
+@Patch('/:id/products-qty')
 async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
     return this.productService.updateProductQty(data,id)
 }
