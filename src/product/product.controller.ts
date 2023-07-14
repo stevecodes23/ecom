@@ -60,5 +60,7 @@ async addProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
 async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
     return this.productService.updateProductQty(data,id)
 }
+
+
 }
 

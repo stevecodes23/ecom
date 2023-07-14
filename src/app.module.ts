@@ -7,9 +7,10 @@ import { JsonWebTokenService } from './services/jwt.service';
 import { PrismaService } from './services/prisma.services';
 import { JwtModule } from '@nestjs/jwt';
 import { ProductModule } from './product/product.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
-  imports: [AuthModule,JwtModule, ProductModule],
+  imports: [AuthModule,JwtModule, ProductModule, FilesModule],
   controllers: [AppController],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })

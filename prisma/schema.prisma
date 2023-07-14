@@ -98,7 +98,7 @@ model files {
   name           String
   key            String
   created_at     DateTime         @default(now())
-  updated_at     String
+  updated_at     DateTime?
   category       category[]
   product_images product_images[]
   profile        profile[]
