@@ -112,3 +112,20 @@ export class addProductQtyDto{
   @IsNotEmpty()
   quantity:number
 }
+
+export class productImageDto{
+  @ApiProperty({
+    type:Number,
+    description: 'product id is a required property',
+  })
+  @IsNotEmpty()
+  product_id:number
+
+  @ApiProperty({
+    type:Number,
+    description: 'image id is a required property',
+  })
+  @IsNotEmpty()
+  image_id:number
+
+}

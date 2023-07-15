@@ -86,4 +86,13 @@ async updateProductQty(data,id):Promise<any>{
     })
 }
 
+async addProductImage(data,id):Promise<any>{
+    const images = await this.prisma.product_images.create({
+        data:{
+            product_id:id,
+            image_id:data.id
+        }
+    })
+}
+
 }

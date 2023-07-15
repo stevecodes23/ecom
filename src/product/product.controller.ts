@@ -1,7 +1,6 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
-import { JsonWebTokenService } from 'src/services/jwt.service';
 import { ProductService } from './product.service';
-import { addProductDto, addProductQtyDto, updateDiscount } from './dto/product.dto';
+import { addProductDto, addProductQtyDto, productImageDto, updateDiscount } from './dto/product.dto';
 import { API_CONSTANTS } from 'src/utils/constants/perPage';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -9,7 +8,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class ProductController {
     constructor(
         private readonly productService:ProductService,
-        private readonly jwtService: JsonWebTokenService
       ){}
 @ApiResponse({ status: 201, description: 'product fetched successfully'})
 @ApiOperation({ summary: 'get all the products' })
@@ -59,6 +57,14 @@ async addProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
 @Patch('/:id/products-qty')
 async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
     return this.productService.updateProductQty(data,id)
+}
+
+@ApiResponse({ status: 201, description: ' added product images '})
+@ApiOperation({ summary: 'add product images ' })
+@ApiTags('product')
+@Post('/:id/image')
+async addProductImage(@Body()data:productImageDto,@Param('id')id:Number){
+    return this.productService.addProductImage(data,id)
 }
 
 

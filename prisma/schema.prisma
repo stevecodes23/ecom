@@ -191,7 +191,7 @@ model product_images {
   product_id Int
   image_id   Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime?
   files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
@@ -199,12 +199,12 @@ model product_images {
 model profile {
   id               Int      @id @default(autoincrement())
   user_id          Int
-  alternate_number Int
-  image_id         Int
+  alternate_number String
+  image_id         Int?
   gender           String
   created_at       DateTime @default(now())
-  updated_at       DateTime
-  files            files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  updated_at       DateTime?
+  files            files?    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
   users            users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
