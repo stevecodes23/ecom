@@ -37,6 +37,7 @@ async addProduct(body:addProductDto):Promise<any> {
             quantity_to_order:body.quantity_to_order,
             vriant_type:body.vriant_type,
             master_varient_id:body.master_varient_id,
+            stock:body.stock,
         }
     })
 return {product_added:product}
@@ -66,26 +67,36 @@ async deleteProduct(id):Promise<any>{
     })
     return {product_deleted:prod}
 }
-async addProductQty(data,id):Promise<any>{
-    const product =await this.prisma.product_inventory.create({
-        data:{
-            product_id:id,
-            qty:data.quantity,
-        }
-    })
-    return {product_qty:product}
-}
-async updateProductQty(data,id):Promise<any>{
-    const product = await this.prisma.product_inventory.update({
+// async addProductQty(data,id):Promise<any>{
+//     const product =await this.prisma.product_inventory.create({
+//         data:{
+//             product_id:id,
+//             qty:data.quantity,
+//         }
+//     })
+//     return {product_qty:product}
+// }
+// async updateProductQty(data,id):Promise<any>{
+//     const product = await this.prisma.product_inventory.update({
+//         where:{
+//         product_id:id
+//         },
+//         data:{
+//             qty:data.qty
+//         }
+//     })
+// }
+
+async updateProductStock(data,id):Promise<any>{
+    const product = await this.prisma.product.update({
         where:{
-        product_id:id
+        id:id
         },
         data:{
-            qty:data.qty
+            stock:data.stock
         }
     })
 }
-
 async addProductImage(data,id):Promise<any>{
     const images = await this.prisma.product_images.create({
         data:{

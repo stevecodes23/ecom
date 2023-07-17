@@ -1,6 +1,6 @@
 import { Body, Controller, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { addProductDto, addProductQtyDto, productImageDto, updateDiscount } from './dto/product.dto';
+import { addProductDto, addProductStockDto, productImageDto, updateDiscount } from './dto/product.dto';
 import { API_CONSTANTS } from 'src/utils/constants/perPage';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -44,20 +44,20 @@ async updateDiscount(@Body()data:updateDiscount,@Param('id')id:Number){
     return this.productService.updateDiscount(data,id)
 }
 
-@ApiResponse({ status: 201, description: ' product quantity added'})
-@ApiOperation({ summary: 'product quanity added ' })
-@ApiTags('product')
-@Post('/:id/products-qty')
-async addProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
-    return this.productService.addProductQty(data,id)
-}
-@ApiResponse({ status: 201, description: ' product quantity updated'})
-@ApiOperation({ summary: 'product quanity updated' })
-@ApiTags('product')
-@Patch('/:id/products-qty')
-async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
-    return this.productService.updateProductQty(data,id)
-}
+// @ApiResponse({ status: 201, description: ' product quantity added'})
+// @ApiOperation({ summary: 'product quanity added ' })
+// @ApiTags('product')
+// @Post('/:id/products-qty')
+// async addProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
+//     return this.productService.addProductQty(data,id)
+// }
+// @ApiResponse({ status: 201, description: ' product quantity updated'})
+// @ApiOperation({ summary: 'product quanity updated' })
+// @ApiTags('product')
+// @Patch('/:id/products-qty')
+// async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
+//     return this.productService.updateProductQty(data,id)
+// }
 
 @ApiResponse({ status: 201, description: ' added product images '})
 @ApiOperation({ summary: 'add product images ' })
@@ -65,6 +65,14 @@ async updateProductQty(@Body()data:addProductQtyDto,@Param('id')id:Number){
 @Post('/:id/image')
 async addProductImage(@Body()data:productImageDto,@Param('id')id:Number){
     return this.productService.addProductImage(data,id)
+}
+
+ @ApiResponse({ status: 201, description: ' product stock updated'})
+@ApiOperation({ summary: 'product quanity updated' })
+@ApiTags('product')
+@Patch('/:id/products-qty')
+async updateProductStock(@Body()data:addProductStockDto,@Param('id')id:Number){
+    return this.productService.updateProductStock(data,id)
 }
 
 

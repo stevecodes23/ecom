@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFile } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { filesDto } from './dto/files.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -13,7 +13,8 @@ export class FilesController {
 @ApiOperation({ summary: 'image files added ' })
 @ApiTags('files')
       @Post()
-      async uploadFiles(@Body()data:filesDto){
-        return this.productService.uploadFiles(data);
+      async uploadFiles(@UploadedFile() file){
+        return this.productService.uploadFiles(file);
       }
 }
+

@@ -94,8 +94,6 @@ model category_product {
 
 model files {
   id             Int              @id @default(autoincrement())
-  url            String
-  name           String
   key            String
   created_at     DateTime         @default(now())
   updated_at     DateTime?
@@ -160,6 +158,7 @@ model product {
   minimum_quantity_to_order Int
   maximum_quantity_to_order Int
   quantity_to_order         Int
+  stock                     Int
   vriant_type               Int                  
   master_varient_id         Int?                 
   created_at                DateTime             @default(now())
@@ -172,19 +171,19 @@ model product {
   ratings_an_reviews        ratings_an_reviews[]
   type                      type[]
   wishlist                  wishlist[]
-  product_inventory         product_inventory[]
+  // product_inventory         product_inventory[]
 }
 
-model product_inventory{
-  id Int @id @default(autoincrement())
-  product_id Int      @unique
-  qty        Int
-  created_at DateTime @default(now())
-  updated_at DateTime?
-  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+// model product_inventory{
+//   id Int @id @default(autoincrement())
+//   product_id Int      @unique
+//   qty        Int
+//   created_at DateTime @default(now())
+//   updated_at DateTime?
+//   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 
 
-}
+// }
 
 model product_images {
   id         Int      @id @default(autoincrement())
