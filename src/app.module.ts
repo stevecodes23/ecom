@@ -9,10 +9,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ProductModule } from './product/product.module';
 import { FilesModule } from './files/files.module';
 import { ProfileModule } from './profile/profile.module';
+import { AddressController } from './address/address.controller';
+import { AddressModule } from './address/address.module';
 
 @Module({
-  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule],
-  controllers: [AppController],
+  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule],
+  controllers: [AppController,],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })
 export class AppModule {

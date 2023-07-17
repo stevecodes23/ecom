@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
-import { filesDto } from './dto/files.dto';
 import { S3 } from 'aws-sdk';
 
 @Injectable()

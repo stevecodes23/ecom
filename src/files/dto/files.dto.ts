@@ -22,3 +22,9 @@ export class filesDto{
     @IsNotEmpty()
     key:string
 }
+
+export class CreateFilesDto {
+  @ApiProperty({ type: 'string', format: 'binary' })
+  @IsNotEmpty()
+  key: any; // Use the appropriate type for the file
+}
