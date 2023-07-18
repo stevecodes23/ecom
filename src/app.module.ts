@@ -16,7 +16,7 @@ import { ManufacturerModule } from './manufacturer/manufacturer.module';
 
 @Module({
   imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule],
-  controllers: [AppController, ManufacturerController,],
+  controllers: [AppController],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })
 export class AppModule {

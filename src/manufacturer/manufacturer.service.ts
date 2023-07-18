@@ -1,24 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
 import { manufacturerDto } from './dto/manufacturer.dto';
 
 @Injectable()
 export class ManufacturerService {
-    constructor(
+     constructor(
     private readonly prisma : PrismaService
   ){}
-
-  async createManufacturer(data:manufacturerDto){
+  
+  async checkManufacturer(data:manufacturerDto){
+    console.log(data)
     const manu = await this.prisma.manufacturer.findFirst({
         where:{
             company_name:data.company_name,
             address:data.address,
             email_id:data.email_id
-        }
+              }
     })
     if(manu){
-        return{manufacturer_id:manu.id}
-            }
+        return{manufacturer_id:manu.id}}
+    else{
+        throw new HttpException("manufacturer does not exists",403)    
+    }}
+
+    
+  async createManufacturer(data:manufacturerDto){
+    console.log(data)
+    const manu = await this.prisma.manufacturer.findFirst({
+        where:{
+            company_name:data.company_name,
+            address:data.address,
+            email_id:data.email_id
+              }
+    })
+    if(manu){
+        // return{manufacturer_id:manu.id}
+     throw new HttpException("manufacturer already exists",403)    
+    }
     else{
         const manu = await this.prisma.manufacturer.create({
             data:{
