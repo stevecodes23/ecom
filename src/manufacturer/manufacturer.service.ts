@@ -1,14 +1,24 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
 import { manufacturerDto } from './dto/manufacturer.dto';
+import { Utility } from 'src/utils/utility';
 
 @Injectable()
 export class ManufacturerService {
      constructor(
     private readonly prisma : PrismaService
   ){}
+
+  async getAllManufacturers(page,perPage){
+    const totalCount = await this.prisma.manufacturer.count({})
+    const list = await this.prisma.manufacturer.findMany({
+        skip:page*perPage,
+        take:perPage
+    })
+    return Utility.getPaginatedFormatData(list,totalCount,page,perPage)
+  }
   
-  async checkManufacturer(id:number){
+  async getManufacturerDetails(id:number){
     console.log(id)
     const manu = await this.prisma.manufacturer.findFirst({
         where:{
@@ -18,7 +28,7 @@ export class ManufacturerService {
     if(manu){
         return{manufacturer:manu}}
     else{
-        throw new HttpException("manufacturer does not exists",403)    
+        throw new HttpException("manufacturer does not exists",404)    
     }}
 
 

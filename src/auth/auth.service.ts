@@ -19,6 +19,7 @@ async signup(body:SignupDto):Promise<any> {
     const password = await bcrypt.hashSync(body.password,10)
     const createdUser = await this.prisma.users.create({
     data:{
+    
     name:body.name,
     email_id:body.email_id,
     phone_number:body.phone_number,

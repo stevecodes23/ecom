@@ -13,9 +13,10 @@ import { AddressController } from './address/address.controller';
 import { AddressModule } from './address/address.module';
 import { ManufacturerController } from './manufacturer/manufacturer.controller';
 import { ManufacturerModule } from './manufacturer/manufacturer.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
-  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule],
+  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule, WishlistModule],
   controllers: [AppController],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })

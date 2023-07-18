@@ -16,7 +16,7 @@ export class ProductController {
 async getAllProducts(@Query('page', new DefaultValuePipe(0), ParseIntPipe)
 page: number,
 @Query('per_page', new DefaultValuePipe(API_CONSTANTS.perPage), ParseIntPipe)
-perPage,){
+perPage:number,){
     return this.productService.getAllProduct(page,perPage)
 }
 
@@ -59,13 +59,13 @@ async updateDiscount(@Body()data:updateDiscount,@Param('id')id:Number){
 //     return this.productService.updateProductQty(data,id)
 // }
 
-@ApiResponse({ status: 201, description: ' added product images '})
-@ApiOperation({ summary: 'add product images ' })
-@ApiTags('product')
-@Patch('/:id/image')
-async addProductImage(@Body()data:productImageDto,@Param('id')id:Number){
-    return this.productService.addProductImage(data,id)
-}
+// @ApiResponse({ status: 201, description: ' added product images '})
+// @ApiOperation({ summary: 'add product images ' })
+// @ApiTags('product')
+// @Post('/:id/image')
+// async addProductImage(@Body()data:productImageDto,@Param('id')id:Number){
+//     return this.productService.addProductImage(data,id)
+// }
 
 @ApiResponse({ status: 201, description: ' product stock updated'})
 @ApiOperation({ summary: 'product quanity updated' })

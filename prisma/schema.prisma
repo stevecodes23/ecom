@@ -98,7 +98,8 @@ model files {
   created_at     DateTime         @default(now())
   updated_at     DateTime?
   category       category[]
-  product_images product_images[]
+  product        product[]        @relation("aa")
+  products       product[]        @relation("bb")
   profile        profile[]
 }
 
@@ -160,6 +161,7 @@ model product {
   maximum_quantity_to_order Int
   quantity_to_order         Int
   stock                     Int
+  product_images            Int[]
   vriant_type               Int                  
   master_varient_id         Int?                 
   created_at                DateTime             @default(now())
@@ -168,7 +170,9 @@ model product {
   category_product          category_product[]
   order_items               order_items[]
   manufacturer              manufacturer         @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
-  product_images            product_images[]
+  files                      files               @relation("aa",fields: [thumbnail_image_id], references: [id])
+  file                       files               @relation("bb",fields: [product_images], references: [id])
+   // product_images         product_images[]
   ratings_an_reviews        ratings_an_reviews[]
   type                      type[]
   wishlist                  wishlist[]
@@ -186,15 +190,15 @@ model product {
 
 // }
 
-model product_images {
-  id         Int      @id @default(autoincrement())
-  product_id Int
-  image_id   Int
-  created_at DateTime @default(now())
-  updated_at DateTime?
-  files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
-  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
-}
+// model product_images {
+//   id         Int      @id @default(autoincrement())
+//   product_id Int
+//   image_id   Int
+//   created_at DateTime @default(now())
+//   updated_at DateTime?
+//   files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+//   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+// }
 
 model profile {
   id               Int      @id @default(autoincrement())
