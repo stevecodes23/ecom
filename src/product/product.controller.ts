@@ -62,12 +62,12 @@ async updateDiscount(@Body()data:updateDiscount,@Param('id')id:Number){
 @ApiResponse({ status: 201, description: ' added product images '})
 @ApiOperation({ summary: 'add product images ' })
 @ApiTags('product')
-@Post('/:id/image')
+@Patch('/:id/image')
 async addProductImage(@Body()data:productImageDto,@Param('id')id:Number){
     return this.productService.addProductImage(data,id)
 }
 
- @ApiResponse({ status: 201, description: ' product stock updated'})
+@ApiResponse({ status: 201, description: ' product stock updated'})
 @ApiOperation({ summary: 'product quanity updated' })
 @ApiTags('product')
 @Patch('/:id/products-qty')

@@ -11,10 +11,12 @@ import { FilesModule } from './files/files.module';
 import { ProfileModule } from './profile/profile.module';
 import { AddressController } from './address/address.controller';
 import { AddressModule } from './address/address.module';
+import { ManufacturerController } from './manufacturer/manufacturer.controller';
+import { ManufacturerModule } from './manufacturer/manufacturer.module';
 
 @Module({
-  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule],
-  controllers: [AppController,],
+  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule],
+  controllers: [AppController, ManufacturerController,],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })
 export class AppModule {

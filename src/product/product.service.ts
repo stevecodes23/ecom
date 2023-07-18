@@ -96,6 +96,7 @@ async updateProductStock(data,id):Promise<any>{
             stock:data.stock
         }
     })
+    return {product_stock:product.stock}
 }
 async addProductImage(data,id):Promise<any>{
     const images = await this.prisma.product_images.create({
@@ -104,6 +105,8 @@ async addProductImage(data,id):Promise<any>{
             image_id:data.id
         }
     })
+    return{image_added:images}
 }
+
 
 }

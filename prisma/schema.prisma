@@ -106,11 +106,12 @@ model manufacturer {
   id           Int       @id @default(autoincrement())
   company_name String
   display_name String
-  address      Int
+  address      String
   email_id     String
   created_at   DateTime  @default(now())
-  updated_at   DateTime
+  updated_at   DateTime?
   product      product[]
+  @@unique([company_name, address, email_id])
 }
 
 model order_items {
