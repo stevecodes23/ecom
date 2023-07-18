@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ManufacturerService } from './manufacturer.service';
 import { manufacturerDto } from './dto/manufacturer.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -10,9 +10,9 @@ export class ManufacturerController {
 @ApiResponse({ status: 201, description: 'manufacturer id '})
 @ApiOperation({ summary: 'check manufacturer exists using this and get manufacturer id in return ' })
 @ApiTags('product')
-@Get()
-async checkManufacturer(@Body()data:manufacturerDto){
-return this.manufacturerService.checkManufacturer(data)
+@Get("/:id")
+async checkManufacturer(@Param("id") id:number){
+return this.manufacturerService.checkManufacturer(id)
         }    
 
 @ApiResponse({ status: 201, description: 'manufacturer id '})

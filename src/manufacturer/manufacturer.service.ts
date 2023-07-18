@@ -8,22 +8,20 @@ export class ManufacturerService {
     private readonly prisma : PrismaService
   ){}
   
-  async checkManufacturer(data:manufacturerDto){
-    console.log(data)
+  async checkManufacturer(id:number){
+    console.log(id)
     const manu = await this.prisma.manufacturer.findFirst({
         where:{
-            company_name:data.company_name,
-            address:data.address,
-            email_id:data.email_id
+            id:id
               }
     })
     if(manu){
-        return{manufacturer_id:manu.id}}
+        return{manufacturer:manu}}
     else{
         throw new HttpException("manufacturer does not exists",403)    
     }}
 
-    
+
   async createManufacturer(data:manufacturerDto){
     console.log(data)
     const manu = await this.prisma.manufacturer.findFirst({
