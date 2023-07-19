@@ -26,8 +26,10 @@ async signup(body:SignupDto):Promise<any> {
     password:password,
  }}
  )
- console.log(createdUser,JSON.stringify(body),JSON.parse(JSON.stringify(body)))
- const token = await this.jwtService.createJwtToken(JSON.parse(JSON.stringify(body)))
+//  JSON.stringify(body),JSON.parse(JSON.stringify(body))
+ console.log(createdUser)
+ const token =await this.jwtService.createJwtToken(createdUser)
+//  const token = await this.jwtService.createJwtToken(JSON.parse(JSON.stringify(body)))
  const dec= await this.jwtService.verifyJwtToken(token)
  return{"token":token,"decrepted" :dec}
 }

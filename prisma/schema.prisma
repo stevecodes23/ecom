@@ -228,7 +228,7 @@ model type {
   product_id                       Int
   url                              String    
   created_at                       DateTime  @default(now())
-  updated_at                       DateTime
+  updated_at                       DateTime?
   category_id                        Int
   banners                          banners   @relation(fields: [banner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "banner_id")
   category_type_categoryTocategory category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category")
@@ -242,7 +242,7 @@ model user_notifications {
   message    String
   Is_read    Boolean  @default(false)
   created_at DateTime @default(now())
-  upated_at  DateTime
+  upated_at  DateTime?
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
@@ -269,7 +269,8 @@ model wishlist {
   product_id Int
   user_id    Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime?
+  @@unique([product_id, user_id])
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
   users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
