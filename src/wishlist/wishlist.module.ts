@@ -11,3 +11,4 @@ import { JsonWebTokenService } from 'src/services/jwt.service';
   providers: [WishlistService,PrismaService,JsonWebTokenService]
 })
 export class WishlistModule {}
+

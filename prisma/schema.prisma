@@ -254,7 +254,7 @@ model users {
   password           String
   status             USERS_STATUS         @default(ACTIVE)
   last_logged_in_at  DateTime?
-  created_at         DateTime?            @default(now())
+  created_at         DateTime            @default(now())
   updated_at         DateTime?
   otp                Int?
   address            address[]
