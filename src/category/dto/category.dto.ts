@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class categoryDto{
@@ -10,7 +10,7 @@ export class categoryDto{
     @IsNotEmpty()
     name:string
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         type:Number,
         description: 'parent_id is a optional property',
       })
