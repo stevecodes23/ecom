@@ -99,6 +99,7 @@ model files {
   product_images product_images[]
   profile        profile[]
   banner         banners[]
+  review_images  review_images[]
 }
 
 model manufacturer {
@@ -229,7 +230,16 @@ model ratings_an_reviews {
   created_at DateTime @default(now())
   updated_at DateTime?
   users      users   @relation(fields:[user_id],references: [id])
+  review_images review_images[]
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
+
+model review_images {
+  id Int @id @default(autoincrement())
+  review_id Int
+  image_id  Int
+  files     files  @relation(fields: [image_id],references: [id])
+  review    ratings_an_reviews @relation(fields: [review_id],references: [id])
 }
 
 // model type {

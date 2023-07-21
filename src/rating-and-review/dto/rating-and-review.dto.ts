@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class addRatingAndReviewDto{
@@ -9,12 +9,26 @@ export class addRatingAndReviewDto{
       @IsNotEmpty()
       product_id: number; 
     
-      @ApiProperty({
+      @ApiPropertyOptional({
         type: String,
         description: 'review is a required property',
       })
       @IsOptional()
       review: string;
+
+      @ApiPropertyOptional({
+        type: String,
+        description: 'title is a required property',
+      })
+      @IsOptional()
+      title: string;
+
+      @ApiPropertyOptional({
+        type: Array,
+        description: 'image_id is a required property',
+      })
+      @IsOptional()
+      image_id: Array<number>;
 
       @ApiProperty({
         type: Number,
