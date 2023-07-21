@@ -222,10 +222,10 @@ model profile {
 model ratings_an_reviews {
   id         Int      @id @default(autoincrement())
   product_id Int
-  review     String
+  review     String?
   rating     Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime?
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
 
@@ -321,4 +321,5 @@ enum USERS_STATUS {
 enum BANNER_TYPE {
   CATEGORY
   PRODUCT
+  CUSTOM
 }
