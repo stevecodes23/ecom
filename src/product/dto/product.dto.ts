@@ -35,6 +35,13 @@ export class addProductDto {
   discount_percentage: number;
 
   @ApiPropertyOptional({
+    type: Array,
+    description: 'category_id  array is a required property',
+  })
+  @IsNotEmpty()
+  category_id: Array<number>;
+
+  @ApiPropertyOptional({
     type: Number,
     description: 'discounted_price is a required property',
   })
@@ -95,6 +102,13 @@ export class addProductDto {
   })
   @IsNotEmpty()
   vriant_type: number;
+
+  @ApiProperty({
+    type: Array,
+    description: 'product_images is a required property',
+  })
+  @IsNotEmpty()
+  product_images: Array<number>;
 
   @ApiPropertyOptional({
     type: Number,

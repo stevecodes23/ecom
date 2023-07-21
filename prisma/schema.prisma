@@ -44,10 +44,13 @@ model attributes {
 model banners {
   id         Int      @id @default(autoincrement())
   image_id   Int
+  url        String
+  type       BANNER_TYPE
   created_at DateTime @default(now())
-  updated_at DateTime
-  status     STATUS
-  type       type[]
+  updated_at DateTime?
+  status     STATUS   @default(ACTIVE)
+  file       files    @relation(fields: [image_id],references: [id])
+ 
 }
 
 model cart {
@@ -69,8 +72,9 @@ model category {
   created_at                   DateTime           @default(now())
   updated_at                   DateTime?
   files                        files              @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  // product                      product[]
   category_product             category_product[]
-  type                         type[]
+  // type                         type[]
 }
 
 model category_attribute_group {
@@ -82,15 +86,7 @@ model category_attribute_group {
   attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attribute_id")
 }
 
-model category_product {
-  id          Int      @id @default(autoincrement())
-  product_id  Int
-  category_id Int
-  created_at  DateTime @default(now())
-  updated_at  DateTime?
-  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
-  product     product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
-}
+
 
 model files {
   id             Int              @id @default(autoincrement())
@@ -99,8 +95,10 @@ model files {
   updated_at     DateTime?
   category       category[]
   product        product[]        @relation("aa")
-  products       product[]        @relation("bb")
+  // products       product[]        @relation("product_images")
+  product_images product_images[]
   profile        profile[]
+  banner         banners[]
 }
 
 model manufacturer {
@@ -146,7 +144,15 @@ model orders {
   order_items       order_items[]
   order_status_logs order_status_logs[]
 }
-
+model category_product {
+  id          Int      @id @default(autoincrement())
+  product_id  Int
+  category_id Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime?
+  category    category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
+  product     product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
 model product {
   id                        Int                  @id @default(autoincrement())
   name                      String
@@ -161,21 +167,22 @@ model product {
   maximum_quantity_to_order Int
   quantity_to_order         Int
   stock                     Int
-  product_images            Int[]
+  // product_images            Int[]
   vriant_type               Int                  
   master_varient_id         Int?                 
   created_at                DateTime             @default(now())
   updated_at                DateTime?
   cart                      cart[]
   category_product          category_product[]
+  // category                  category             @relation(fields: [category_id],references: [id])
   order_items               order_items[]
   manufacturer              manufacturer         @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
   files                      files               @relation("aa",fields: [thumbnail_image_id], references: [id])
-  file                       files               @relation("bb",fields: [product_images], references: [id])
-   // product_images         product_images[]
+   product_images         product_images[]
   ratings_an_reviews        ratings_an_reviews[]
-  type                      type[]
   wishlist                  wishlist[]
+  // type                      type[]
+   // file                       files               @relation("product_images",fields: [product_images], references: [id])
   // product_inventory         product_inventory[]
 }
 
@@ -190,15 +197,15 @@ model product {
 
 // }
 
-// model product_images {
-//   id         Int      @id @default(autoincrement())
-//   product_id Int
-//   image_id   Int
-//   created_at DateTime @default(now())
-//   updated_at DateTime?
-//   files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
-//   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
-// }
+model product_images {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  image_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime?
+  files      files    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
+  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+}
 
 model profile {
   id               Int      @id @default(autoincrement())
@@ -222,18 +229,18 @@ model ratings_an_reviews {
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
 
-model type {
-  id                               Int       @id @default(autoincrement())
-  banner_id                        Int
-  product_id                       Int
-  url                              String    
-  created_at                       DateTime  @default(now())
-  updated_at                       DateTime?
-  category_id                        Int
-  banners                          banners   @relation(fields: [banner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "banner_id")
-  category_type_categoryTocategory category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category")
-  product                          product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
-}
+// model type {
+//   id                               Int       @id @default(autoincrement())
+//   banner_id                        Int
+//   product_id                       Int
+//   url                              String    
+//   created_at                       DateTime  @default(now())
+//   updated_at                       DateTime?
+//   category_id                        Int
+//   banners                          banners   @relation(fields: [banner_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "banner_id")
+//   category_type_categoryTocategory category @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category")
+//   product                          product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+// }
 
 model user_notifications {
   id         Int      @id @default(autoincrement())
@@ -309,4 +316,9 @@ enum ORDER_STATUS_LOGS {
 enum USERS_STATUS {
   ACTIVE
   BLOCKED
+}
+
+enum BANNER_TYPE {
+  CATEGORY
+  PRODUCT
 }

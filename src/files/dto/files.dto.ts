@@ -24,7 +24,9 @@ export class filesDto{
 }
 
 export class CreateFilesDto {
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({ type: 'string',
+  description: 'key is a required property'
+ })
   @IsNotEmpty()
   key: any; // Use the appropriate type for the file
 }

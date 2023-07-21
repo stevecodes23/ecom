@@ -20,6 +20,7 @@ perPage:number,){
     return this.productService.getAllProduct(page,perPage)
 }
 
+
 @ApiResponse({ status: 201, description: 'The product has been successfully created.'})
 @ApiOperation({ summary: 'add product using this ' })
 @ApiTags('product')
@@ -42,6 +43,13 @@ async deleteProduct(@Param('id')id:Number){
 @Patch('/:id/update-price')
 async updateDiscount(@Body()data:updateDiscount,@Param('id')id:Number){
     return this.productService.updateDiscount(data,id)
+}
+@ApiResponse({ status: 201, description:'get product details'})
+@ApiOperation({ summary: 'get product details ' })
+@ApiTags('product')
+@Get('/:id')
+async getProduct(@Param('id')id:number){
+    return this.productService.getProduct(id)
 }
 
 // @ApiResponse({ status: 201, description: ' product quantity added'})

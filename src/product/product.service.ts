@@ -16,9 +16,18 @@ async getAllProduct(page,perPage):Promise<any>{
     const list= await this.prisma.product.findMany({
         skip:page*perPage,
         take:perPage,
+        include:{product_images:true,category_product:true}
     })
  return Utility.getPaginatedFormatData(list,totalCount,page,perPage)
 
+}
+
+async getProduct(id:number):Promise<any>{
+    const prod= await this.prisma.product.findFirst({
+        where:{id:id},
+        include:{product_images:true,category_product:true}
+    })
+    return {product:prod}
 }
  
 async addProduct(body:addProductDto):Promise<any> {
@@ -32,6 +41,7 @@ async addProduct(body:addProductDto):Promise<any> {
             thumbnail_image_id:body.thumbnail_image_id,
             manufacturer_id:body.manufacturer_id,
             price:body.price,
+            // category_id:body.category_id,
             minimum_quantity_to_order:body.minimum_quantity_to_order,
             maximum_quantity_to_order:body.maximum_quantity_to_order,
             quantity_to_order:body.quantity_to_order,
@@ -40,7 +50,21 @@ async addProduct(body:addProductDto):Promise<any> {
             stock:body.stock,
         }
     })
-return {product_added:product}
+    const productImages = await this.prisma.product_images.createMany({
+        data: body.product_images.map(imageId => ({
+            product_id: product.id,
+            image_id: imageId
+        }))})
+        // productImages.map(item=>{
+        //     console.log(item)
+        // })
+    const productCategory = await this.prisma.category_product.createMany({
+        data: body.category_id.map(categoryId => ({
+            product_id: product.id,
+            category_id: categoryId
+        }))
+    })
+return {product_added:product,productImages:productImages,productCategory:productCategory}
 }
 async updateDiscount(body:updateDiscount,id):Promise<any>{
     const product =await this.prisma.product.findFirst({
@@ -60,12 +84,21 @@ async updateDiscount(body:updateDiscount,id):Promise<any>{
     return{product_updted:updatedProd}
 }
 async deleteProduct(id):Promise<any>{
-    const prod =await this.prisma.product.delete({
+
+    const deleted_image = await this.prisma.product_images.deleteMany({
         where:{
-            id:id
-        }
-    })
-    return {product_deleted:prod}
+            product_id:id
+        }})
+    const deleted_category = await this.prisma.category_product.deleteMany({
+            where:{
+                product_id:id
+            }})
+            const prod =await this.prisma.product.delete({
+                where:{
+                    id:id
+                } 
+            })
+    return {product_deleted:prod,deleted_image:deleted_image,deleted_category:deleted_category}
 }
 // async addProductQty(data,id):Promise<any>{
 //     const product =await this.prisma.product_inventory.create({

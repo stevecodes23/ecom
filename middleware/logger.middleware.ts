@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request, Response, NextFunction } from 'express';
 import { JsonWebTokenService } from 'src/services/jwt.service';
 import { PrismaService } from 'src/services/prisma.services';
+import { STATUS } from 'src/utils/constants/constants';
 
 
 @Injectable()

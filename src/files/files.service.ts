@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
 import { S3 } from 'aws-sdk';
+import { CreateFilesDto } from './dto/files.dto';
 
 @Injectable()
 export class FilesService {
@@ -47,19 +48,24 @@ export class FilesService {
         });
       }
 
-      async uploadFiles(file: any) {
-        console.log(file);
-        const { originalname } = file;
-        const bucket = process.env.S3_BUCKET_NAME;
-        const fileObject = await this.uploadToS3(file.buffer, bucket, originalname);
-        console.log(fileObject['ETag']);
-        const saveFile = await this.prisma.files.create({
-          data: {
-            key: fileObject['key'],
-          },
-        });
-        const url = await this.getS3SignedUrl(fileObject['key']);
-        return { id: saveFile.id, url: url };
+      async uploadFiles(file: CreateFilesDto) {
+        // console.log(file);
+        // const { originalname } = file;
+        // const bucket = process.env.S3_BUCKET_NAME;
+        // const fileObject = await this.uploadToS3(file.buffer, bucket, originalname);
+        // console.log(fileObject['ETag']);
+        // const saveFile = await this.prisma.files.create({
+        //   data: {
+        //     key: fileObject['key'],
+        //   },
+        // });
+        // const url = await this.getS3SignedUrl(fileObject['key']);
+        // return { id: saveFile.id, url: url };
+        return await this.prisma.files.create({
+          data:{
+            key:file.key
+          }
+        })
       }
     }
 
