@@ -4,7 +4,7 @@ import {
   GetAllUsersDto,
   LoginDto,
   SignupDto,
-  UpdatePassword,
+  UpdatePassword, 
 } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/services/prisma.services';
@@ -42,9 +42,17 @@ export class AuthService {
         email_id: body.email_id,
       },
     });
+  
     // console.log(user)
     const checkPassword = await bcrypt.compareSync(password, user['password']);
     if (checkPassword == true) {
+      const lastLoggedIn = await this.prisma.users.update({
+        where:{
+          id:user.id
+        },data: {
+          last_logged_in_at: new Date()
+        }
+      })
       const token = await this.jwtService.createJwtToken(user);
       // return {user,'token':token,checkPassword}
       return { data: token };
@@ -66,6 +74,7 @@ export class AuthService {
         },
         data: {
           password: password,
+          updated_at: new Date()
         },
       });
       const newtoken = await this.jwtService.createJwtToken(user);
@@ -83,6 +92,7 @@ export class AuthService {
       },
       data: {
         phone_number: data.phone_number,
+        updated_at:new Date()
       },
     });
     const newtoken = await this.jwtService.createJwtToken(user);
