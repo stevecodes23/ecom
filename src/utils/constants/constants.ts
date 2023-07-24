@@ -8,3 +8,7 @@ export enum BANNER_TYPE{
     CATEGORY="CATEGORY",
     PRODUCT="PRODUCT"   
 }
+export enum ADDRESS_TYPE{
+    HOME="HOME",
+    WORK="WORK"
+}

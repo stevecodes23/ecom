@@ -6,11 +6,12 @@ export class Utility {
       perPage,
     ) {
       return {
+        data:{
         items: data,
         page: page,
         per_page: perPage,
         total: totalResultCount,
         total_pages: Math.ceil(totalResultCount / perPage),
-      };
+      }};
     }}
   

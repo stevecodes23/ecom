@@ -18,8 +18,8 @@ export class AddressController {
     @Post("")
     async create(@User() token:string,@Body() data:CreateAddressDto) {
          const user = await this.jwtService.verifyJwtToken(token)
-         const user_id = Number(user[`id`]);
-        return this.addressService.create(user_id,data);
+        //  const user_id = Number(user[`id`]);
+        return this.addressService.create(Number(user['id']),data);
     }
 
 }

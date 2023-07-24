@@ -1,13 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsPhoneNumber } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsPhoneNumber } from "class-validator";
+import { ADDRESS_TYPE } from "src/utils/constants/constants";
 
 export class CreateAddressDto{
-    @ApiProperty({
-        type:Number,
-        description: 'user_id is a required property',
-      })
-    @IsNotEmpty()
-    user_id:number;
+    // @ApiProperty({
+    //     type:Number,
+    //     description: 'user_id is a required property',
+    //   })
+    // @IsNotEmpty()
+    // user_id:number;
     
     @ApiProperty({
         type:String,
@@ -59,4 +60,11 @@ export class CreateAddressDto{
       })
       @IsOptional()
       reciever_name:string;
-}
+      @ApiPropertyOptional({
+        type:String,
+        description: 'reciever_name is a required property',
+      })
+      @IsEnum(ADDRESS_TYPE, { message: 'Invalid status value' })
+      type: ADDRESS_TYPE;
+
+    }

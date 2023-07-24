@@ -38,5 +38,24 @@ export class RatingAndReviewService {
        })
        return {deleted_images:deleted_images,deleted_review:deleted_review}
     }
+    async updateReview(data:addRatingAndReviewDto,id:number):Promise<any>{
+        const review = await this.prisma.ratings_an_reviews.update({
+            data:{
+               rating: data.rating,
+               review: data.review,
+               product_id:data.product_id,
+               title:data.title
+            },where:{
+                id:id
+            }
+        })
+        const review_images= await this.prisma.review_images.createMany({
+           data:data.image_id.map(item=>({
+               review_id:review.id,
+               image_id:item
+           }))
+        })
+        return {review:review,images:review_images}
+    }
 }
 

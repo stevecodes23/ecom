@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post, Put } from '@nestjs/common';
 import { ProductService } from 'src/product/product.service';
 import { addRatingAndReviewDto } from './dto/rating-and-review.dto';
 import { RatingAndReviewService } from './rating-and-review.service';
@@ -28,5 +28,13 @@ export class RatingAndReviewController {
     async deleteRatingAndReview(@Param('id')id:number):Promise<any>{
         return this.ratingAndReviewService.deleteRatingAndReview(id);
     }
+    
+    // @ApiResponse({ status: 201, description: 'review deleted successfully'})
+    // @ApiOperation({ summary: ' deleted review' })
+    // @ApiTags('add-rating-and-review')
+    // @Patch('/:id')
+    // async updateReview(@Body()data:addRatingAndReviewDto):Promise<any>{
+    //     return this.ratingAndReviewService.updateReview(data)
+    // }
 }
 
