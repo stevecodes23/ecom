@@ -75,12 +75,17 @@ export class SignUpResponseData{
   })
   iat: string;
 }
-export class SignupResponseDto {
+export class SignupResDto {
   @ApiProperty()
   token: string;
   @ApiProperty({ type: SignUpResponseData })
   dec: SignUpResponseData;
 }
+ export class SignUpResponseDto{
+  @ApiProperty({ type: SignupResDto })
+  data:SignupResDto
+
+ }
 
 
 export class SignupDto {
