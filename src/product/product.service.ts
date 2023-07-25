@@ -45,7 +45,6 @@ async addProduct(body:addProductDto):Promise<any> {
             minimum_quantity_to_order:body.minimum_quantity_to_order,
             maximum_quantity_to_order:body.maximum_quantity_to_order,
             quantity_to_order:body.quantity_to_order,
-            vriant_type:body.vriant_type,
             master_varient_id:body.master_varient_id,
             stock:body.stock,
         }

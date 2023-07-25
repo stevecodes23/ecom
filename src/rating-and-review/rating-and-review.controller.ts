@@ -13,7 +13,7 @@ export class RatingAndReviewController {
         private readonly ratingAndReviewService: RatingAndReviewService
       ){}
     @ApiResponse({ status: 201, description: 'review created successfully'})
-    @ApiOperation({ summary: ' create review' })
+    @ApiOperation({ summary: ' create review' }) 
     @ApiTags('add-rating-and-review')
     @Post()
     async addRatingAndReview(@Body() body:addRatingAndReviewDto,@User()token:any):Promise<any>{

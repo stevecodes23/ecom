@@ -48,6 +48,7 @@ export class addProductDto {
   @IsNotEmpty()
   discounted_price: number;
 
+  
   @ApiProperty({
     type: Number,
     description: 'thumbnail_image_id is a required property',

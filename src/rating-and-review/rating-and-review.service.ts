@@ -7,12 +7,12 @@ export class RatingAndReviewService {
     constructor(private readonly prisma:PrismaService){}
 
  async addRatingAndReview(data:addRatingAndReviewDto,user_id:number):Promise<any>{
-         const review = await this.prisma.ratings_an_reviews.create({
+         const review = await this.prisma.ratings_and_reviews.create({
              data:{
                 rating: data.rating,
                 review: data.review,
                 product_id:data.product_id,
-                user_id:user_id,
+                user_id:user_id, 
                 title:data.title
              }
          })
@@ -31,15 +31,16 @@ export class RatingAndReviewService {
             review_id:id
         }
        })
-       const deleted_review= await this.prisma.ratings_an_reviews.delete({
+       const deleted_review= await this.prisma.ratings_and_reviews.delete({
         where:{
             id:id
         }
        })
        return {deleted_images:deleted_images,deleted_review:deleted_review}
     }
+    
     async updateReview(data:addRatingAndReviewDto,id:number):Promise<any>{
-        const review = await this.prisma.ratings_an_reviews.update({
+        const review = await this.prisma.ratings_and_reviews.update({
             data:{
                rating: data.rating,
                review: data.review,

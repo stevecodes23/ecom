@@ -100,6 +100,7 @@ model files {
   product        product[]        @relation("aa")
   product_images product_images[]
   profile        profile[]
+  review_images  review_images[]
 }
 
 model manufacturer {
@@ -172,8 +173,8 @@ model product {
   quantity_to_order         Int
   stock                     Int
   // vriant_type               Int
-  attribute_id              Int
-  attribute_value_id        Int
+  attribute_id              Int?
+  attribute_value_id        Int?
   master_varient_id         Int?
   created_at                DateTime             @default(now())
   updated_at                DateTime?
@@ -183,7 +184,7 @@ model product {
   manufacturer              manufacturer         @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
   files                     files                @relation("aa", fields: [thumbnail_image_id], references: [id])
   product_images            product_images[]
-  ratings_an_reviews        ratings_an_reviews[]
+  ratings_an_reviews        ratings_and_reviews[]
   wishlist                  wishlist[]
 }
 
@@ -209,14 +210,27 @@ model profile {
   users            users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
-model ratings_an_reviews {
+model ratings_and_reviews {
   id         Int      @id @default(autoincrement())
   product_id Int
-  review     String
+  user_id    Int
+  title      String?
+  review     String?
   rating     Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime?
+  users      users    @relation(fields: [user_id],references: [id])
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  review_images review_images[]
+}
+
+model review_images{
+  id Int @id @default(autoincrement())
+  review_id Int
+  image_id  Int
+  ratings_and_review ratings_and_reviews @relation(fields: [review_id],references: [id])
+  file   files @relation(fields: [image_id],references: [id])
+
 }
 
 model user_notifications {
@@ -248,13 +262,14 @@ model users {
   last_logged_in_at  DateTime?
   created_at         DateTime             @default(now())
   updated_at         DateTime?
-  is_verified        Boolean
+  is_verified        Boolean               @default(false)
   address            address[]
   cart               cart[]
   profile            profile[]
   user_notifications user_notifications[]
   wishlist           wishlist[]
   user_verification_otp user_verification_otp[]
+  ratings_and_review  ratings_and_reviews[]
 }
 
 model wishlist {
