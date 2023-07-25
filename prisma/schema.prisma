@@ -115,7 +115,7 @@ model order_items {
   quantity   Int
   price      Int
   created_at DateTime @default(now())
-  updated_at DateTime
+  updated_at DateTime?
   orders     orders   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
   product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }

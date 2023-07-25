@@ -14,8 +14,8 @@ import { AuthService } from './auth.service';
 import {
   LoginDto,
   LoginResponseDto,
+  SignUpResponseDto,
   SignupDto,
-  SignupResponseDto,
   UpdateNumber,
   UpdatePassword,
   UpdateResponseDto,
@@ -36,7 +36,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JsonWebTokenService,
   ) {}
-  @ApiResponse({ status: 201, type: SignupResponseDto })
+  @ApiResponse({ status: 201, type: SignUpResponseDto })
   @ApiOperation({ summary: 'signupData' })
   @ApiTags('auth')
   @Post('/signup')

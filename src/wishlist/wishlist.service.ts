@@ -16,7 +16,7 @@ export class WishlistService {
           user_id:id,
         }
       })
-      return{prouct_added:addedItems}
+      return{data:addedItems}
     }
 
     async deleteItem(data,userId:number):Promise<any>{
@@ -26,7 +26,7 @@ export class WishlistService {
                   user_id:userId,
                 }
       })
-      return{prouct_added:deletedItems}
+      return{data:deletedItems}
     }
     async getAll(page,perPage):Promise<any>{
       const totalCount = await this.prisma.wishlist.count({})
@@ -35,7 +35,7 @@ export class WishlistService {
         take:perPage,
       })
       return Utility.getPaginatedFormatData(listOfProduct,totalCount,page,perPage)
-
     }
+    
 }
 

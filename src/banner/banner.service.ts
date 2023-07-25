@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
 import { Utility } from 'src/utils/utility';
+import { UpdateBannerDto } from './dto/banner.dto';
 
 @Injectable()
 export class BannerService {
@@ -11,11 +12,11 @@ export class BannerService {
         const banner = await this.prisma.banners.create({
             data:{
                 image_id:data.image_id,
-                url:data.url,
+                url:data.url, 
                 type:data.type,
             }
         })
-        return {banner:banner}
+        return {data:banner}
     }
     async getAllBanner(page:number,perPage:number) : Promise<any>{
         const totalCount= await this.prisma.banners.count({})
@@ -59,10 +60,24 @@ export class BannerService {
         //                     }
         //                 })
         // }
-        return await this.prisma.banners.update({
+        const updatedStatus = await this.prisma.banners.update({
             where: { id },
             data: { status:status.status == 'ACTIVE' ? 'INACTIVE' : 'ACTIVE' },
           });
+          return {data:updatedStatus}
+    }
+    async updateBanner(id:number,data:UpdateBannerDto):Promise<any> {
+        const banner = await this.prisma.banners.update({
+            where:{
+                id:id
+            },
+            data:{
+                image_id:data.image_id,
+                url:data.url, 
+                type:data.type,
+            }
+        })
+        return {data:banner}
     }
 
 }

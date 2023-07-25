@@ -42,8 +42,8 @@ async getSubCategory(@Param('id')id:number):Promise<any>{
     return this.categoryService.getSubCategory(id)
 }
 
-@ApiResponse({ status: 201, description: 'The subcategory list has been generated.',type :CategoryResponseDto})
-@ApiOperation({ summary: 'get subcategory list using this ' })
+@ApiResponse({ status: 201, description: 'update category.',type :CategoryResponseDto})
+@ApiOperation({ summary: 'update category' })
 @ApiTags('category')
 @Put('/:id')
 async updateCategory(@Param('id')id:number,@Body()data:CategoryDto):Promise<any>{

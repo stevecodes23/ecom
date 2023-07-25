@@ -32,8 +32,8 @@ export class AuthService {
     console.log(createdUser);
     const token = await this.jwtService.createJwtToken(createdUser);
     //  const token = await this.jwtService.createJwtToken(JSON.parse(JSON.stringify(body)))
-    const dec = await this.jwtService.verifyJwtToken(token);
-    return { data:{token,dec}};
+    const user = await this.jwtService.verifyJwtToken(token);
+    return { data:{token,user}};
   }
   async login(body: LoginDto): Promise<any> {
     const password = body.password;
@@ -78,7 +78,7 @@ export class AuthService {
         },
       });
       const newtoken = await this.jwtService.createJwtToken(user);
-      return { data:newtoken };
+      return { data:"password has been updated" };
       //  console.log(newtoken)
       // return user
     } else {
@@ -96,7 +96,7 @@ export class AuthService {
       },
     });
     const newtoken = await this.jwtService.createJwtToken(user);
-    return { data:newtoken };
+    return { data:"Phone number has been updated " };
   }
   async getAllUsers(data: GetAllUsersDto): Promise<any> {
     const totalCount = await this.prisma.users.count();

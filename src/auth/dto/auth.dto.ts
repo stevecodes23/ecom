@@ -14,10 +14,7 @@ export class SignUpResponseData{
   @ApiProperty({
     type:String
   })
-  @IsString()
-  token:string
-
-  
+  token:string;
   @ApiProperty({
     type: Number,
   })
@@ -84,7 +81,6 @@ export class SignupResDto {
  export class SignUpResponseDto{
   @ApiProperty({ type: SignupResDto })
   data:SignupResDto
-
  }
 
 
@@ -228,7 +224,6 @@ export class UpdateNumber {
 export class UpdateNumberResponse {
   @ApiProperty({
     type: String,
-    description: 'returned JWT token',
   })
   data: String;
 }
@@ -251,7 +246,6 @@ export class UpdatePassword {
 export class UpdateResponseDto {
   @ApiProperty({
     type: String,
-    description: 'returned JWT token',
 
   })
   data: String;
