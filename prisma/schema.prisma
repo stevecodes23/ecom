@@ -27,9 +27,15 @@ model attribute_group {
   id                       Int                        @id @default(autoincrement())
   name                     String
   created_at               DateTime                   @default(now())
-  updated_at               DateTime
+  updated_at               DateTime?
   attributes               attributes[]
   category_attribute_group category_attribute_group[]
+}
+model attribute_values{
+  id           Int @id @default(autoincrement())
+  attribute_id Int
+  value        String
+  attributes attributes @relation(fields: [attribute_id],references:[id])
 }
 
 model attributes {
@@ -39,6 +45,7 @@ model attributes {
   created_at         DateTime        @default(now())
   updated_at         DateTime
   attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id])
+  attribute_values    attribute_values[]
 }
 
 model banners {
@@ -164,7 +171,9 @@ model product {
   maximum_quantity_to_order Int
   quantity_to_order         Int
   stock                     Int
-  vriant_type               Int
+  // vriant_type               Int
+  attribute_id              Int
+  attribute_value_id        Int
   master_varient_id         Int?
   created_at                DateTime             @default(now())
   updated_at                DateTime?
@@ -221,6 +230,14 @@ model user_notifications {
   users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
+model user_verification_otp{
+  id  Int  @id() @default(autoincrement())
+  user_id  Int 
+  otp      Int
+  created_at DateTime @default(now())
+  users    users  @relation(fields: [user_id],references: [id])
+}
+
 model users {
   id                 Int                  @id @default(autoincrement())
   email_id           String               @unique
@@ -231,12 +248,13 @@ model users {
   last_logged_in_at  DateTime?
   created_at         DateTime             @default(now())
   updated_at         DateTime?
-  otp                Int?
+  is_verified        Boolean
   address            address[]
   cart               cart[]
   profile            profile[]
   user_notifications user_notifications[]
   wishlist           wishlist[]
+  user_verification_otp user_verification_otp[]
 }
 
 model wishlist {
