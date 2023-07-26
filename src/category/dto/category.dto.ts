@@ -24,6 +24,19 @@ export class CategoryDto{
     @IsNotEmpty()
     image_id:number
 }
+export class FilesDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  key: string;
+
+  @ApiProperty()
+  created_at: string;
+
+  @ApiProperty()
+  updated_at: string | null;
+}
 export class CategoryDataDto {
   @ApiProperty()
   id: number;
@@ -37,6 +50,28 @@ export class CategoryDataDto {
   @ApiProperty()
   image_id: number;
 
+  @ApiProperty({ type: FilesDto })
+  files: FilesDto;
+
+  @ApiProperty()
+  created_at: String;
+
+  @ApiProperty()
+  updated_at: String | null;
+}
+export class CategoryCreateDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  parent_id: number;
+
+  @ApiProperty()
+  image_id: number;
+  
   @ApiProperty()
   created_at: String;
 
@@ -44,8 +79,8 @@ export class CategoryDataDto {
   updated_at: String | null;
 }
 export class CategoryResponseDto {
-  @ApiProperty({ type:CategoryDataDto })
-  data: CategoryDataDto;
+  @ApiProperty({ type:CategoryCreateDto })
+  data: CategoryCreateDto;
 }
 
 class CategoryItemDto {
@@ -63,6 +98,9 @@ class CategoryItemDto {
 
   @ApiProperty()
   created_at: string;
+
+  @ApiProperty({ type: FilesDto })
+  files: FilesDto;
 
   @ApiProperty()
   updated_at: string | null;
@@ -84,6 +122,7 @@ export class CategoryListDto {
   @ApiProperty()
   total_pages: number;
 }
+
 
 export class CategoryListResponseDto {
   @ApiProperty({ type:CategoryListDto })
@@ -129,6 +168,9 @@ export class SubCategoryDto {
 
   @ApiProperty()
   created_at: string;
+
+  @ApiProperty({ type: FilesDto })
+  files: FilesDto;
 
   @ApiProperty()
   updated_at: string | null;

@@ -33,6 +33,9 @@ export class CategoryService {
         const list= await this.prisma.category.findMany({
             skip:page*perPage,
             take:perPage,
+            include:{
+                files:true
+            }
         })
      return Utility.getPaginatedFormatData(list,totalCount,page,perPage)
     
@@ -41,6 +44,8 @@ export class CategoryService {
         const subcategories= await this.prisma.category.findMany({
             where:{
                 parent_id:id
+            },include:{
+                files:true
             }
         })
         return{data:subcategories}
@@ -53,7 +58,6 @@ export class CategoryService {
                 parent_id:data.parent_id,
                 image_id:data.image_id,
                 updated_at:new Date()
-
             }
         })
         return {data:data}

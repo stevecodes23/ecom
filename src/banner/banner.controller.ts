@@ -23,7 +23,7 @@ export class BannerController {
         @Query('per_page', new DefaultValuePipe(API_CONSTANTS.perPage), ParseIntPipe)
         perPage: number): Promise<any> {
         return this.bannerService.getAllBanner(page, perPage)
-    }
+    } 
 
     @ApiResponse({ status: 201, description: 'The banner has been successfully deleted.', type: DeleteBannerResponseDto })
     @ApiOperation({ summary: 'delete banner using this ' })

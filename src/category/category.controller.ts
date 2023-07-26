@@ -16,14 +16,14 @@ export class CategoryController {
 @Post()
 async addCategory(@Body()data:CategoryDto):Promise<any>{
     return this.categoryService.addCategory(data)
-}
+} 
 @ApiResponse({ status: 201, description: 'The category has been successfully deleted.',type:DeletedCategoryResponseDto})
 @ApiOperation({ summary: 'delete category using this ' })
 @ApiTags('category')
 @Delete("/:id")
 async deleteCategory(@Param('id')id :number):Promise<any>{
     return this.categoryService.deleteCategory(id)
-}
+} 
 @ApiResponse({ status: 201, description: 'The category list has been generated.',type:CategoryListResponseDto})
 @ApiOperation({ summary: 'get category list using this ' ,})
 @ApiTags('category')
