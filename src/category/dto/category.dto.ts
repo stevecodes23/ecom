@@ -148,9 +148,13 @@ export class DeletedCategoryDataDto {
   @ApiProperty()
   updated_at: string | null;
 }
+export class Delete{
+  @ApiProperty({type:Number})
+  id:number
+}
 export class DeletedCategoryResponseDto{
-  @ApiProperty({type:DeletedCategoryDataDto})
-  data:DeletedCategoryDataDto;
+  @ApiProperty({type:Delete})
+  data:Delete;
 }
 
 export class SubCategoryDto {

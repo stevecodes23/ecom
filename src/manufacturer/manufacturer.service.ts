@@ -29,7 +29,7 @@ export class ManufacturerService {
         id:id
       }
     })
-    return {data:deletedManufacturer.id}
+    return {data:{id:deletedManufacturer.id}}
   }
   
   async getManufacturerDetails(id:number){
@@ -71,7 +71,7 @@ export class ManufacturerService {
             image_id:data.image_id
             }
         })
-        return{data:manu.id}
+        return{data:manu}
         }
   } 
 
@@ -85,7 +85,6 @@ export class ManufacturerService {
             email_id:data.email_id ,
             image_id:data.image_id,
             updated_at:new Date(),
-
       }
     })
     return {data:updatedManufacturer}
