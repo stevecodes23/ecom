@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/services/prisma.services';
-import { addRatingAndReviewDto } from './dto/rating-and-review.dto';
+import { AddRatingAndReviewDto } from './dto/rating-and-review.dto';
+import { Utility } from 'src/utils/utility';
 
 @Injectable()
 export class RatingAndReviewService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async addRatingAndReview(data: addRatingAndReviewDto, user_id: number): Promise<any> {
+    async addRatingAndReview(data: AddRatingAndReviewDto, user_id: number): Promise<any> {
         const review = await this.prisma.ratings_and_reviews.create({
             data: {
                 rating: data.rating,
@@ -22,7 +23,7 @@ export class RatingAndReviewService {
                 image_id: item
             }))
         })
-        return { review: review, images: review_images }
+        return { data: { review, review_images } }
     }
 
     async deleteRatingAndReview(id: number): Promise<any> {
@@ -36,10 +37,15 @@ export class RatingAndReviewService {
                 id: id
             }
         })
-        return { deleted_images: deleted_images, deleted_review: deleted_review }
+        return { data: { id: deleted_review.id } }
     }
 
-    async updateReview(data: addRatingAndReviewDto, id: number): Promise<any> {
+    async updateReview(data: AddRatingAndReviewDto, id: number): Promise<any> {
+        const delete_previous_images = await this.prisma.review_images.deleteMany({
+            where: {
+                review_id: id
+            }
+        })
         const review = await this.prisma.ratings_and_reviews.update({
             data: {
                 rating: data.rating,
@@ -56,7 +62,34 @@ export class RatingAndReviewService {
                 image_id: item
             }))
         })
-        return { review: review, images: review_images }
+        return { data: { review, review_images } }
+    }
+    async getReview(id: number, page, perPage): Promise<any> {
+        const totalCount = await this.prisma.ratings_and_reviews.count();
+        const list = await this.prisma.ratings_and_reviews.findMany({
+            skip: page * perPage,
+            take: perPage,
+            where: {
+                product_id: id,
+            }, include: {
+                review_images: {
+                    select: {
+                        file: {
+                            select: {
+                                key: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        console.log(list);
+        return Utility.getPaginatedFormatData(
+            list,
+            totalCount,
+            page,
+            perPage,
+        );
     }
 }
 

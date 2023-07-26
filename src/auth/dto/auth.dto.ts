@@ -45,10 +45,10 @@ export class SignUpResponseData{
   password: string;
 
   @ApiPropertyOptional({
-    type: String,
+    type: Boolean,
   })
   @IsOptional()
-  otp: number;
+  is_verified: boolean;
   @ApiPropertyOptional({
     type: String,
   })
