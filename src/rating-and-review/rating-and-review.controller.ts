@@ -11,24 +11,24 @@ export class RatingAndReviewController {
     constructor(
         private readonly jwtService: JsonWebTokenService,
         private readonly ratingAndReviewService: RatingAndReviewService
-      ){}
-    @ApiResponse({ status: 201, description: 'review created successfully'})
-    @ApiOperation({ summary: ' create review' }) 
+    ) { }
+    @ApiResponse({ status: 201, description: 'review created successfully' })
+    @ApiOperation({ summary: ' create review' })
     @ApiTags('add-rating-and-review')
     @Post()
-    async addRatingAndReview(@Body() body:addRatingAndReviewDto,@User()token:any):Promise<any>{
+    async addRatingAndReview(@Body() body: addRatingAndReviewDto, @User() token: any): Promise<any> {
         const user = await this.jwtService.verifyJwtToken(token)
-        return this.ratingAndReviewService.addRatingAndReview(body,user['id']);
+        return this.ratingAndReviewService.addRatingAndReview(body, user['id']);
     }
 
-    @ApiResponse({ status: 201, description: 'review deleted successfully'})
+    @ApiResponse({ status: 201, description: 'review deleted successfully' })
     @ApiOperation({ summary: ' deleted review' })
     @ApiTags('add-rating-and-review')
     @Delete('')
-    async deleteRatingAndReview(@Param('id')id:number):Promise<any>{
+    async deleteRatingAndReview(@Param('id') id: number): Promise<any> {
         return this.ratingAndReviewService.deleteRatingAndReview(id);
     }
-    
+
     // @ApiResponse({ status: 201, description: 'review deleted successfully'})
     // @ApiOperation({ summary: ' deleted review' })
     // @ApiTags('add-rating-and-review')

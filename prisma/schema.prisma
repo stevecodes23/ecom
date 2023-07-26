@@ -31,21 +31,22 @@ model attribute_group {
   attributes               attributes[]
   category_attribute_group category_attribute_group[]
 }
-model attribute_values{
-  id           Int @id @default(autoincrement())
+
+model attribute_values {
+  id           Int        @id @default(autoincrement())
   attribute_id Int
   value        String
-  attributes attributes @relation(fields: [attribute_id],references:[id])
+  attributes   attributes @relation(fields: [attribute_id], references: [id])
 }
 
 model attributes {
-  id                 Int             @id @default(autoincrement())
+  id                 Int                @id @default(autoincrement())
   name               String
   attribute_group_id Int
-  created_at         DateTime        @default(now())
+  created_at         DateTime           @default(now())
   updated_at         DateTime
-  attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id])
-  attribute_values    attribute_values[]
+  attribute_group    attribute_group    @relation(fields: [attribute_group_id], references: [id])
+  attribute_values   attribute_values[]
 }
 
 model banners {
@@ -117,15 +118,15 @@ model manufacturer {
 }
 
 model order_items {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   product_id Int
   order_id   Int
   quantity   Int
   price      Int
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
-  orders     orders   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
-  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  orders     orders    @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
+  product    product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
 
 model order_status_logs {
@@ -159,7 +160,7 @@ model category_product {
 }
 
 model product {
-  id                        Int                  @id @default(autoincrement())
+  id                        Int                   @id @default(autoincrement())
   name                      String
   description               String
   origin                    String
@@ -176,13 +177,13 @@ model product {
   attribute_id              Int?
   attribute_value_id        Int?
   master_varient_id         Int?
-  created_at                DateTime             @default(now())
+  created_at                DateTime              @default(now())
   updated_at                DateTime?
   cart                      cart[]
   category_product          category_product[]
   order_items               order_items[]
-  manufacturer              manufacturer         @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
-  files                     files                @relation("aa", fields: [thumbnail_image_id], references: [id])
+  manufacturer              manufacturer          @relation(fields: [manufacturer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "nanufacturer_id")
+  files                     files                 @relation("aa", fields: [thumbnail_image_id], references: [id])
   product_images            product_images[]
   ratings_an_reviews        ratings_and_reviews[]
   wishlist                  wishlist[]
@@ -211,26 +212,25 @@ model profile {
 }
 
 model ratings_and_reviews {
-  id         Int      @id @default(autoincrement())
-  product_id Int
-  user_id    Int
-  title      String?
-  review     String?
-  rating     Int
-  created_at DateTime @default(now())
-  updated_at DateTime?
-  users      users    @relation(fields: [user_id],references: [id])
-  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  id            Int             @id @default(autoincrement())
+  product_id    Int
+  user_id       Int
+  title         String?
+  review        String?
+  rating        Int
+  created_at    DateTime        @default(now())
+  updated_at    DateTime?
+  users         users           @relation(fields: [user_id], references: [id])
+  product       product         @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
   review_images review_images[]
 }
 
-model review_images{
-  id Int @id @default(autoincrement())
-  review_id Int
-  image_id  Int
-  ratings_and_review ratings_and_reviews @relation(fields: [review_id],references: [id])
-  file   files @relation(fields: [image_id],references: [id])
-
+model review_images {
+  id                 Int                 @id @default(autoincrement())
+  review_id          Int
+  image_id           Int
+  ratings_and_review ratings_and_reviews @relation(fields: [review_id], references: [id])
+  file               files               @relation(fields: [image_id], references: [id])
 }
 
 model user_notifications {
@@ -244,32 +244,32 @@ model user_notifications {
   users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
-model user_verification_otp{
-  id  Int  @id() @default(autoincrement())
-  user_id  Int 
-  otp      Int
+model user_verification_otp {
+  id         Int      @id() @default(autoincrement())
+  user_id    Int
+  otp        Int
   created_at DateTime @default(now())
-  users    users  @relation(fields: [user_id],references: [id])
+  users      users    @relation(fields: [user_id], references: [id])
 }
 
 model users {
-  id                 Int                  @id @default(autoincrement())
-  email_id           String               @unique
-  phone_number       String
-  name               String
-  password           String
-  status             USERS_STATUS         @default(ACTIVE)
-  last_logged_in_at  DateTime?
-  created_at         DateTime             @default(now())
-  updated_at         DateTime?
-  is_verified        Boolean               @default(false)
-  address            address[]
-  cart               cart[]
-  profile            profile[]
-  user_notifications user_notifications[]
-  wishlist           wishlist[]
+  id                    Int                     @id @default(autoincrement())
+  email_id              String                  @unique
+  phone_number          String
+  name                  String
+  password              String
+  status                USERS_STATUS            @default(ACTIVE)
+  last_logged_in_at     DateTime?
+  created_at            DateTime                @default(now())
+  updated_at            DateTime?
+  is_verified           Boolean?                 @default(false)
+  address               address[]
+  cart                  cart[]
+  profile               profile[]
+  user_notifications    user_notifications[]
+  wishlist              wishlist[]
   user_verification_otp user_verification_otp[]
-  ratings_and_review  ratings_and_reviews[]
+  ratings_and_review    ratings_and_reviews[]
 }
 
 model wishlist {

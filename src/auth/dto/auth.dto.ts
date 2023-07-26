@@ -114,11 +114,11 @@ export class SignupDto {
   password: string;
 
   @ApiPropertyOptional({
-    type: String,
-    description: 'otp  is an optional property',
+    type: Boolean,
+    description: 'is_verified is an optional property',
   })
   @IsOptional()
-  otp: number;
+  is_verified: boolean;
   @ApiPropertyOptional({
     type: String,
     description: 'updated is an optional property',
