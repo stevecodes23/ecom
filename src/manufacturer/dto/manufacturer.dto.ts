@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 export class CreateManufacturerDto{
     @ApiProperty({
@@ -15,6 +15,10 @@ export class CreateManufacturerDto{
     })
     @IsNotEmpty()
     display_name: string;
+    
+    @IsNotEmpty()
+    @IsNumber()
+    image_id:number
 
     @ApiProperty({
         type: String,
@@ -40,6 +44,19 @@ export class CreateManufacturerResponse{
     @ApiProperty({type:CreateManufacturerData})
     data:CreateManufacturerData;
 }
+export class FilesDto {
+    @ApiProperty()
+    id: number;
+  
+    @ApiProperty()
+    key: string;
+  
+    @ApiProperty()
+    created_at: string;
+  
+    @ApiProperty()
+    updated_at: string | null;
+  }
 
 export class GetManufacturerData {
     @ApiProperty()
@@ -56,6 +73,10 @@ export class GetManufacturerData {
   
     @ApiProperty()
     email_id: string;
+
+    
+    @ApiProperty({ type: FilesDto })
+    files: FilesDto;
   
     @ApiProperty()
     created_at: string;
@@ -118,7 +139,9 @@ export class GetManufacturerData {
     })
     @IsNotEmpty()
     address: string;
-    
+    @IsNumber()
+    @IsOptional()
+    image_id:number
     @ApiProperty({
         type: String,
         description: "this is a required property"

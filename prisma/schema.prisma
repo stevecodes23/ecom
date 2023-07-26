@@ -101,6 +101,7 @@ model files {
   product        product[]        @relation("aa")
   product_images product_images[]
   profile        profile[]
+  manufacturer   manufacturer[]
   review_images  review_images[]
 }
 
@@ -109,10 +110,12 @@ model manufacturer {
   company_name String
   display_name String
   address      String
+  image_id     Int?
   email_id     String
   created_at   DateTime  @default(now())
   updated_at   DateTime?
   product      product[]
+  files        files?     @relation(fields: [image_id], references: [id])
 
   @@unique([company_name, address, email_id])
 }
@@ -262,7 +265,7 @@ model users {
   last_logged_in_at     DateTime?
   created_at            DateTime                @default(now())
   updated_at            DateTime?
-  is_verified           Boolean?                 @default(false)
+  is_verified           Boolean?                @default(false)
   address               address[]
   cart                  cart[]
   profile               profile[]

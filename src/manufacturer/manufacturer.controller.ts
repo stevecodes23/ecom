@@ -23,7 +23,7 @@ export class ManufacturerController {
     @Get("/:id")
     async getManufacturerDetails(@Param("id") id: number):Promise<any> {
         return this.manufacturerService.getManufacturerDetails(id)
-    }
+    } 
 
     @ApiResponse({ status: 201, description: 'manufacturer id ', type: CreateManufacturerResponse })
     @ApiOperation({ summary: 'add manufacturer using this and get manufacturer id in return ' })

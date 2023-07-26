@@ -14,7 +14,10 @@ export class ManufacturerService {
     console.log(totalCount,page,perPage)
     const list = await this.prisma.manufacturer.findMany({
         skip:page*perPage,
-        take:perPage
+        take:perPage,
+        include:{
+          files:true
+        }
     })
     console.log(list)
     return Utility.getPaginatedFormatData(list,totalCount,page,perPage)
@@ -34,6 +37,8 @@ export class ManufacturerService {
     const manu = await this.prisma.manufacturer.findFirst({
         where:{
             id:id
+              },include:{
+                files:true
               }
     })
     if(manu){
@@ -62,12 +67,13 @@ export class ManufacturerService {
             company_name:data.company_name,
             display_name:data.display_name,
             address:data.address,
-            email_id:data.email_id    
+            email_id:data.email_id ,
+            image_id:data.image_id
             }
         })
         return{data:manu.id}
         }
-  }
+  } 
 
   async updateManufacturer(id:number,data:UpdateManufacturerDto):Promise<any>{
     const updatedManufacturer=await this.prisma.manufacturer.update({
@@ -77,6 +83,7 @@ export class ManufacturerService {
             display_name:data.display_name,
             address:data.address,
             email_id:data.email_id ,
+            image_id:data.image_id,
             updated_at:new Date(),
 
       }
