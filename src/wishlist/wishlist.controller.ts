@@ -15,7 +15,7 @@ export class WishlistController {
 @ApiResponse({ status: 201, description: 'The product has been successfully created.',type:WishListResponseDto})
 @ApiOperation({ summary: 'add product to whishlist  ' })
 @ApiTags('wishlist')
-@Post()
+@Post() 
 async addItem(@Body()data :wishlistDto,@User()token:any){
     const user = await this.jwtService.verifyJwtToken(token)
     console.log(user['id'])
@@ -40,8 +40,9 @@ async deleteItem(@Param('id')id:number,@User()token:any){
 async getAll(@Query('page', new DefaultValuePipe(0), ParseIntPipe)
 page: number,
 @Query('per_page', new DefaultValuePipe(API_CONSTANTS.perPage), ParseIntPipe)
-perPage:number,): Promise<any>{
-   return this.wishlistService.getAll(page,perPage)
+perPage:number,@User()token:any): Promise<any>{
+    const user = await this.jwtService.verifyJwtToken(token)
+   return this.wishlistService.getAll(page,perPage,user['id'])
 }
 
 }

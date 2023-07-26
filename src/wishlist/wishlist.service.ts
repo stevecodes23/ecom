@@ -28,14 +28,19 @@ export class WishlistService {
       })
       return{data:deletedItems}
     }
-    async getAll(page,perPage):Promise<any>{
+    async getAll(page,perPage,id:number):Promise<any>{
       const totalCount = await this.prisma.wishlist.count({})
       const listOfProduct = await this.prisma.wishlist.findMany({
         skip:page*perPage,
         take:perPage,
-      })
+        where:{
+          user_id:id,
+        },include:{product:{include:{
+          product_images:{select:{files:true}}
+        }}
+    }})
       return Utility.getPaginatedFormatData(listOfProduct,totalCount,page,perPage)
     }
-    
+     
 }
 
