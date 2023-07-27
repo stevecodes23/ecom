@@ -8,7 +8,6 @@ export class ProfileController {
     constructor(
         private readonly profileService:ProfileService,
       ){}
-
 @ApiResponse({ status: 201, description: 'The profile has been successfully created.'})
 @ApiOperation({ summary: 'create profile using this  ' })
 @ApiTags('profile')
@@ -17,4 +16,4 @@ export class ProfileController {
     return this.profileService.createProfile(data);
  }
 }
-
+ 

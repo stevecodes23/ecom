@@ -83,14 +83,95 @@ export class CategoryResponseDto {
   data: CategoryCreateDto;
 }
 
-class CategoryItemDto {
+// class CategoryItemDto {
+//   @ApiProperty()
+//   id: number;
+
+//   @ApiProperty()
+//   name: string;
+
+//   @ApiProperty()
+//   parent_id: number | null;
+
+//   @ApiProperty()
+//   image_id: number;
+
+//   @ApiProperty()
+//   created_at: string;
+
+//   @ApiProperty({ type: FilesDto })
+//   files: FilesDto;
+
+//   @ApiProperty({ type: [CategoryDto], required: false })
+//   subCategories: CategoryDto[];
+
+//   @ApiProperty()
+//   updated_at: string | null;
+// }
+
+// export class CategoryListDto {
+//   @ApiProperty({ type: [CategoryItemDto] })
+//   items: CategoryItemDto[];
+
+//   @ApiProperty()
+//   page: number;
+
+//   @ApiProperty()
+//   per_page: number;
+
+//   @ApiProperty()
+//   total: number;
+
+//   @ApiProperty()
+//   total_pages: number;
+// }
+
+
+// export class CategoryListResponseDto {
+//   @ApiProperty({ type:CategoryListDto })
+//   data: CategoryListDto;
+// }
+// export class FilesDto {
+//   @ApiProperty()
+//   id: number;
+
+//   @ApiProperty()
+//   key: string;
+
+//   @ApiProperty()
+//   created_at: string;
+
+//   @ApiProperty()
+//   updated_at: string | null;
+// }
+export class CateDto {
   @ApiProperty()
   id: number;
 
   @ApiProperty()
   name: string;
 
+  @ApiProperty({ required: false })
+  parent_id: number | null;
+
   @ApiProperty()
+  image_id: number;
+
+  @ApiProperty()
+  created_at: string;
+
+  @ApiProperty({ type: FilesDto })
+  files: FilesDto;
+}
+
+export class CatDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty({ required: false })
   parent_id: number | null;
 
   @ApiProperty()
@@ -102,13 +183,12 @@ class CategoryItemDto {
   @ApiProperty({ type: FilesDto })
   files: FilesDto;
 
-  @ApiProperty()
-  updated_at: string | null;
+  @ApiProperty({ type: [CateDto], required: false })
+  subCategories: CateDto[];
 }
-
 export class CategoryListDto {
-  @ApiProperty({ type: [CategoryItemDto] })
-  items: CategoryItemDto[];
+  @ApiProperty({ type: [CatDto] })
+  items: CatDto[];
 
   @ApiProperty()
   page: number;
@@ -122,10 +202,8 @@ export class CategoryListDto {
   @ApiProperty()
   total_pages: number;
 }
-
-
 export class CategoryListResponseDto {
-  @ApiProperty({ type:CategoryListDto })
+  @ApiProperty({ type: CategoryListDto })
   data: CategoryListDto;
 }
 

@@ -3,6 +3,8 @@ import { BannerService } from './banner.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { API_CONSTANTS } from 'src/utils/constants/perPage';
 import { CreateBannerResponseDto, CreateBannerDto, DeleteBannerResponseDto, GetAllBannerDto, ToggleStatusResponseDto, UpdateBannerDto, UpdateResponseDto } from './dto/banner.dto';
+import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
+import { BANNER_TYPE } from 'src/utils/constants/constants';
 
 @Controller('banner')
 export class BannerController {
@@ -17,12 +19,16 @@ export class BannerController {
     @ApiResponse({ status: 201, description: 'The banner list has been successfully generated.', type: GetAllBannerDto })
     @ApiOperation({ summary: 'get banner using this ' })
     @ApiTags('banner')
-    @Get()
+    @ApiImplicitQuery({ name: 'per_page', type: Number, required: false })
+    @ApiImplicitQuery({ name: 'page', type: Number, required: false })
+    @ApiImplicitQuery({ name: 'type', enum:BANNER_TYPE, required: false })
+    @Get() 
     async getAllBanner(@Query('page', new DefaultValuePipe(0), ParseIntPipe)
     page: number,
         @Query('per_page', new DefaultValuePipe(API_CONSTANTS.perPage), ParseIntPipe)
-        perPage: number): Promise<any> {
-        return this.bannerService.getAllBanner(page, perPage)
+        perPage: number,
+        @Query('type')type:BANNER_TYPE): Promise<any> {
+        return this.bannerService.getAllBanner(page, perPage,type)
     } 
 
     @ApiResponse({ status: 201, description: 'The banner has been successfully deleted.', type: DeleteBannerResponseDto })

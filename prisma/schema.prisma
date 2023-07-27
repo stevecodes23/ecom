@@ -50,14 +50,16 @@ model attributes {
 }
 
 model banners {
-  id         Int         @id @default(autoincrement())
-  image_id   Int
-  url        String
-  type       BANNER_TYPE
-  created_at DateTime    @default(now())
-  updated_at DateTime?
-  status     STATUS      @default(ACTIVE)
-  file       files       @relation(fields: [image_id], references: [id])
+  id            Int         @id @default(autoincrement())
+  image_id      Int
+  url           String
+  type          BANNER_TYPE
+  type_id       Int?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime?
+  status        STATUS      @default(ACTIVE)
+  display_order Int?
+  file          files       @relation(fields: [image_id], references: [id])
 }
 
 model cart {
@@ -115,7 +117,7 @@ model manufacturer {
   created_at   DateTime  @default(now())
   updated_at   DateTime?
   product      product[]
-  files        files?     @relation(fields: [image_id], references: [id])
+  files        files?    @relation(fields: [image_id], references: [id])
 
   @@unique([company_name, address, email_id])
 }
@@ -326,4 +328,5 @@ enum USERS_STATUS {
 enum BANNER_TYPE {
   CATEGORY
   PRODUCT
+  CUSTOM
 }

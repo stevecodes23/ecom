@@ -22,7 +22,7 @@ export class CreateProfileDto {
       })
       @IsNotEmpty()
       image_id:number
-
+ 
        
       @ApiProperty({
         type:Number,

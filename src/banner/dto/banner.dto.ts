@@ -1,47 +1,86 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { BANNER_TYPE } from "@prisma/client";
-import { IsNotEmpty } from "class-validator";
- export class CreateBannerDto {
-    @ApiProperty({
-        type:Number,
-        description: 'image_id is required property',
-      })
-    @IsNotEmpty()
-    image_id:number  
-    @ApiProperty({
-        type:String,
-        description: 'url is a required property',
-      })
-    @IsNotEmpty()
-    url:string
-    @ApiProperty({
-        type:String,
-        description: 'type is a required property',
-      })
-    @IsNotEmpty()
-    type:BANNER_TYPE
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { BANNER_TYPE, STATUS } from "@prisma/client";
+import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+// import { STATUS } from "src/utils/constants/constants";
+export class CreateBannerDto {
+  @ApiProperty({
+    type: Number,
+    description: 'image_id is required property',
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  image_id: number
+  @ApiProperty({
+    type: String,
+    description: 'url is a required property',
+  })
+  @IsNotEmpty()
+  url: string
+  @ApiProperty({
+    enum: BANNER_TYPE,
+    description: 'type is a required property',
+  })
+  @IsNotEmpty()
+  type: BANNER_TYPE
+
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  type_id: number
+
+  @ApiPropertyOptional({ enum: STATUS })
+  @IsOptional()
+  status: STATUS
+  @IsOptional()
+  @ApiProperty({ type: Number })
+  display_order: number
+
 }
 export class UpdateBannerDto {
   @ApiProperty({
-      type:Number,
-      description: 'image_id is required property',
-    })
+    type: Number,
+    description: 'image_id is required property',
+  })
+  @IsNumber()
   @IsNotEmpty()
-  image_id:number  
+  image_id: number
   @ApiProperty({
-      type:String,
-      description: 'url is a required property',
-    })
+    type: String,
+    description: 'url is a required property',
+  })
   @IsNotEmpty()
-  url:string
+  url: string
   @ApiProperty({
-      type:String,
-      description: 'type is a required property',
-    })
+    enum: BANNER_TYPE,
+    description: 'type is a required property',
+  })
   @IsNotEmpty()
-  type:BANNER_TYPE
-}
+  type: BANNER_TYPE
 
+  @ApiProperty({ type: Number })
+  @IsNumber()
+  type_id: number
+
+  @ApiPropertyOptional({ enum: STATUS })
+  @IsOptional()
+  status: STATUS
+  @IsOptional()
+  @ApiProperty({ type: Number })
+  display_order: number
+
+}
+export class FilesDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  key: string;
+
+  @ApiProperty()
+  created_at: string;
+
+  @ApiProperty()
+  updated_at: string | null;
+}
 export class CreateBannerDataDto {
   @ApiProperty()
   id: number;
@@ -64,6 +103,30 @@ export class CreateBannerDataDto {
   @ApiProperty()
   status: string;
 }
+export class CreateBannerDataRDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  image_id: number;
+
+  @ApiProperty()
+  url: string;
+
+  @ApiProperty()
+  type: string;
+
+  @ApiProperty()
+  updated_at: string | null;
+
+  @ApiProperty()
+  status: string;
+  @ApiProperty()
+  created_at: string;
+  @ApiProperty({ type: FilesDto })
+  files: FilesDto;
+
+}
 
 export class CreateBannerResponseDto {
   @ApiProperty({ type: CreateBannerDataDto })
@@ -82,9 +145,9 @@ export class UpdateResponseDto {
   data: CreateBannerDataDto;
 }
 
-export class Items{
-  @ApiProperty({ type:[CreateBannerDataDto]})
-  items:CreateBannerDataDto
+export class Items {
+  @ApiProperty({ type: [CreateBannerDataRDto] })
+  items: CreateBannerDataRDto
 
   @ApiProperty()
   page: number;
@@ -98,7 +161,7 @@ export class Items{
   @ApiProperty()
   total_pages: number;
 }
-export class GetAllBannerDto{
-  @ApiProperty({type:Items})
-  data:Items
+export class GetAllBannerDto {
+  @ApiProperty({ type: Items })
+  data: Items
 }

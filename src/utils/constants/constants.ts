@@ -6,7 +6,8 @@ export enum STATUS{
 
 export enum BANNER_TYPE{
     CATEGORY="CATEGORY",
-    PRODUCT="PRODUCT"   
+    PRODUCT="PRODUCT" ,
+    CUSTOM="CUSTOM"  
 }
 export enum ADDRESS_TYPE{
     HOME="HOME",
