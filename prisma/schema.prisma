@@ -19,6 +19,7 @@ model address {
   reciever_name   String?
   created_at      DateTime  @default(now())
   updated_at      DateTime?
+  deleted_at      DateTime?
   type            TYPE
   users           users     @relation(fields: [user_id], references: [id])
 }
@@ -28,6 +29,7 @@ model attribute_group {
   name                     String
   created_at               DateTime                   @default(now())
   updated_at               DateTime?
+  deleted_at               DateTime?
   attributes               attributes[]
   category_attribute_group category_attribute_group[]
 }
@@ -36,6 +38,9 @@ model attribute_values {
   id           Int        @id @default(autoincrement())
   attribute_id Int
   value        String
+  created_at   DateTime   @default(now())
+  updated_at   DateTime?
+  deleted_at   DateTime?
   attributes   attributes @relation(fields: [attribute_id], references: [id])
 }
 
@@ -44,7 +49,8 @@ model attributes {
   name               String
   attribute_group_id Int
   created_at         DateTime           @default(now())
-  updated_at         DateTime
+  updated_at         DateTime?
+  deleted_at         DateTime?
   attribute_group    attribute_group    @relation(fields: [attribute_group_id], references: [id])
   attribute_values   attribute_values[]
 }
@@ -57,20 +63,22 @@ model banners {
   type_id       Int?
   created_at    DateTime    @default(now())
   updated_at    DateTime?
+  deleted_at    DateTime?
   status        STATUS      @default(ACTIVE)
   display_order Int?
   file          files       @relation(fields: [image_id], references: [id])
 }
 
 model cart {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   user_id    Int
   product_id Int
   quantity   Int
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime
-  product    product  @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
-  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
+  deleted_at DateTime?
+  product    product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
+  users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
 model category {
@@ -90,6 +98,7 @@ model category_attribute_group {
   attribute_group_id Int
   created_at         DateTime        @default(now())
   updated_at         DateTime?
+  deleted_at         DateTime?
   attribute_group    attribute_group @relation(fields: [attribute_group_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attribute_id")
 }
 
@@ -98,6 +107,7 @@ model files {
   key            String
   created_at     DateTime         @default(now())
   updated_at     DateTime?
+  deleted_at     DateTime?
   banner         banners[]
   category       category[]
   product        product[]        @relation("aa")
@@ -116,6 +126,7 @@ model manufacturer {
   email_id     String
   created_at   DateTime  @default(now())
   updated_at   DateTime?
+  deleted_at   DateTime?
   product      product[]
   files        files?    @relation(fields: [image_id], references: [id])
 
@@ -130,6 +141,7 @@ model order_items {
   price      Int
   created_at DateTime  @default(now())
   updated_at DateTime?
+  deleted_at DateTime?
   orders     orders    @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
   product    product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
@@ -139,7 +151,8 @@ model order_status_logs {
   order_id   Int
   status     ORDER_STATUS_LOGS
   created_at DateTime          @default(now())
-  updated_at Int
+  updated_at DateTime?
+  deleted_at DateTime?
   orders     orders            @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_id")
 }
 
@@ -149,7 +162,8 @@ model orders {
   payment           PAYMENT
   payment_method    PAYMENT_METHOD
   created_at        DateTime            @default(now())
-  updated_at        DateTime
+  updated_at        DateTime?
+  deleted_at        DateTime?
   order_items       order_items[]
   order_status_logs order_status_logs[]
 }
@@ -160,6 +174,7 @@ model category_product {
   category_id Int
   created_at  DateTime  @default(now())
   updated_at  DateTime?
+  deleted_at  DateTime?
   category    category  @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
   product     product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
@@ -184,6 +199,7 @@ model product {
   master_varient_id         Int?
   created_at                DateTime              @default(now())
   updated_at                DateTime?
+  deleted_at                DateTime?
   cart                      cart[]
   category_product          category_product[]
   order_items               order_items[]
@@ -200,6 +216,7 @@ model product_images {
   image_id   Int
   created_at DateTime  @default(now())
   updated_at DateTime?
+  deleted_at DateTime?
   files      files     @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
   product    product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
 }
@@ -212,6 +229,7 @@ model profile {
   gender           String
   created_at       DateTime  @default(now())
   updated_at       DateTime?
+  deleted_at       DateTime?
   files            files?    @relation(fields: [image_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "image_id")
   users            users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
@@ -225,6 +243,7 @@ model ratings_and_reviews {
   rating        Int
   created_at    DateTime        @default(now())
   updated_at    DateTime?
+  deleted_at    DateTime?
   users         users           @relation(fields: [user_id], references: [id])
   product       product         @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
   review_images review_images[]
@@ -234,6 +253,8 @@ model review_images {
   id                 Int                 @id @default(autoincrement())
   review_id          Int
   image_id           Int
+  created_at         DateTime            @default(now())
+  deleted_at         DateTime?
   ratings_and_review ratings_and_reviews @relation(fields: [review_id], references: [id])
   file               files               @relation(fields: [image_id], references: [id])
 }
@@ -246,6 +267,7 @@ model user_notifications {
   Is_read    Boolean   @default(false)
   created_at DateTime  @default(now())
   upated_at  DateTime?
+  deleted_at DateTime?
   users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 }
 
@@ -267,6 +289,7 @@ model users {
   last_logged_in_at     DateTime?
   created_at            DateTime                @default(now())
   updated_at            DateTime?
+  deleted_at            DateTime?
   is_verified           Boolean?                @default(false)
   address               address[]
   cart                  cart[]
@@ -283,6 +306,7 @@ model wishlist {
   user_id    Int
   created_at DateTime  @default(now())
   updated_at DateTime?
+  deleted_at DateTime?
   product    product   @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_id")
   users      users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id")
 

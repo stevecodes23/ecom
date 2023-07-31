@@ -19,9 +19,11 @@ import { CategoryModule } from './category/category.module';
 import { CategoryProductModule } from './category-product/category-product.module';
 import { BannerModule } from './banner/banner.module';
 import { RatingAndReviewModule } from './rating-and-review/rating-and-review.module';
-
+import { AttributeModule } from './attribute/attribute.module';
+import { AttributeValueModule } from './attribute-value/attribute-value.module';
+import { AttributeGroupModule } from './attribute-group/attribute-group.module';
 @Module({
-  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule, WishlistModule, UserNotificationModule, CategoryModule, CategoryProductModule, BannerModule, RatingAndReviewModule],
+  imports: [AuthModule,JwtModule, ProductModule, FilesModule, ProfileModule, AddressModule, ManufacturerModule, WishlistModule, UserNotificationModule, CategoryModule, CategoryProductModule, BannerModule, RatingAndReviewModule, AttributeModule, AttributeValueModule, AttributeGroupModule],
   controllers: [AppController],
   providers: [AppService,JsonWebTokenService,PrismaService],
 })
